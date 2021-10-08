@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CPP.Core.Models;
 using CPP.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,7 @@ namespace CPP.Controllers
         }
 
         [HttpGet]
-        public List<dynamic> GetAll()
+        public List<Car> GetAll()
         {
             return _db.GetAll();
         }
