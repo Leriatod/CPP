@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using CPP.Core.Models;
-using CPP.Data;
+using CPP.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CPP.Controllers
@@ -15,7 +15,7 @@ namespace CPP.Controllers
         }
 
         [HttpGet]
-        public List<Car> GetAll()
+        public IEnumerable<Car> GetAll()
         {
             return _db.GetAll();
         }
