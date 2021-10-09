@@ -1,4 +1,5 @@
-using CPP.Data;
+using CPP.Core;
+using CPP.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,7 +23,7 @@ namespace CPP
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddTransient<CarDatabase>();
+            services.AddTransient<ICarRepository, CarRepository>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

@@ -2,7 +2,7 @@ namespace CPP.Core.Models
 {
     public class Car
     {
-        public string Name { get; set; }
+        public string Producer { get; set; }
         public string Model { get; set; }
         public string BodyStyle { get; set; }
         public double Price { get; set; }

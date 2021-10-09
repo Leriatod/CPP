@@ -7,7 +7,7 @@ namespace CPP.Mapping
     {
         public CarClassMap()
         {
-            Map(c => c.Name).Name("name");
+            Map(c => c.Producer).Name("name");
             Map(c => c.Model).Name("model");
             Map(c => c.BodyStyle).Name("type");
             Map(c => c.Price).Name("price");
