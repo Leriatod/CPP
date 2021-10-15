@@ -24,6 +24,7 @@ namespace CPP
         {
             services.AddControllersWithViews();
             services.AddTransient<ICarRepository, CarRepository>();
+            services.AddTransient<INNStorage, NNStorage>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
