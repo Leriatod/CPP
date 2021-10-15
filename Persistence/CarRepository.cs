@@ -11,10 +11,10 @@ namespace CPP.Persistence
 {
     public class CarRepository : ICarRepository
     {
-        private readonly string fileName = "Persistence/CarDataset/audi_cars.csv";
+        private readonly string _fileName = "Persistence/CarDataset/audi_cars.csv";
         public IEnumerable<Car> GetAll()
         {
-            using (var streamReader = new StreamReader(fileName))
+            using (var streamReader = new StreamReader(_fileName))
             {
                 using (var csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
                 {

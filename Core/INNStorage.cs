@@ -5,5 +5,6 @@ namespace CPP.Core
     public interface INNStorage
     {
         void Save(NNCoefficients nnCoefficients);
+        NNCoefficients Load();
     }
 }
