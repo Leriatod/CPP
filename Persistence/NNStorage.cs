@@ -10,7 +10,11 @@ namespace CPP.Persistence
         private readonly string filePath = "Persistence/model.json";
         public void Save(NNCoefficients nnCoefficients)
         {
-            string json = JsonSerializer.Serialize(nnCoefficients);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(nnCoefficients, options);
             File.WriteAllText(filePath, json);
         }
     }
