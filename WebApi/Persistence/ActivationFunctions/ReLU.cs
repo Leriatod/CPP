@@ -1,6 +1,6 @@
-using CPP.Core;
+using WebApi.Core;
 
-namespace CPP.Persistence.ActivationFunctions
+namespace WebApi.Persistence.ActivationFunctions
 {
     public class ReLU : IActivationFunction
     {

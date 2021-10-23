@@ -1,7 +1,7 @@
-using CPP.Core.Models;
+using WebApi.Core.Models;
 using CsvHelper.Configuration;
 
-namespace CPP.Mapping
+namespace WebApi.Mapping
 {
     public class CarClassMap : ClassMap<Car>
     {

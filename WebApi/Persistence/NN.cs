@@ -1,7 +1,7 @@
 using System;
-using CPP.Core;
+using WebApi.Core;
 
-namespace CPP.Persistence
+namespace WebApi.Persistence
 {
     public class NN : INN
     {
@@ -16,6 +16,7 @@ namespace CPP.Persistence
         private double[][][] _weights;
         private double[][] _previousBiasDeltas;
         private double[][][] _previousWeightDeltas;
+
         public NN(int[] layerSizes, IActivationFunction[] activationFunctions)
         {
             _activationFunctions = activationFunctions;
@@ -29,7 +30,9 @@ namespace CPP.Persistence
         {
             _nonInputLayerSizes = new int[_layerNumber];
             for (int i = 0; i < _layerNumber; i++)
+            {
                 _nonInputLayerSizes[i] = layerSizes[i + 1];
+            }
 
             _biases = new double[_layerNumber][];
             _previousBiasDeltas = new double[_layerNumber][];
@@ -62,11 +65,17 @@ namespace CPP.Persistence
             for (int l = 0; l < _layerNumber; l++)
             {
                 for (int j = 0; j < _nonInputLayerSizes[l]; j++)
+                {
                     _biases[l][j] = random.NextDouble();
+                }
 
                 for (int i = 0; i < GetInputsNumberForLayer(l); i++)
+                {
                     for (int j = 0; j < _nonInputLayerSizes[l]; j++)
+                    {
                         _weights[l][i][j] = random.NextDouble();
+                    }
+                }
             }
         }
 
@@ -79,7 +88,7 @@ namespace CPP.Persistence
                     _layerInputs[l][j] = _biases[l][j];
                     for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                     {
-                        double input = (l == 0 ? inputs[i] : _layerOutputs[l - 1][i]);
+                        double input = GetInputFromLayer(inputs, l, i);
                         _layerInputs[l][j] += _weights[l][i][j] * input;
                     }
                     _layerOutputs[l][j] = _activationFunctions[l].Evaluate(_layerInputs[l][j]);
@@ -118,7 +127,9 @@ namespace CPP.Persistence
             {
                 _deltas[layerIndex][i] = 0.0;
                 for (int j = 0; j < _nonInputLayerSizes[layerIndex + 1]; j++)
+                {
                     _deltas[layerIndex][i] += _weights[layerIndex + 1][i][j] * _deltas[layerIndex + 1][j];
+                }
                 _deltas[layerIndex][i] *= _activationFunctions[layerIndex].EvaluateDerivative(_layerInputs[layerIndex][i]);
             }
         }
@@ -138,24 +149,30 @@ namespace CPP.Persistence
         private void UpdateWeights(double[] inputs, double learningRate, double momentumRate)
         {
             for (int l = 0; l < _layerNumber; l++)
+            {
                 for (int i = 0; i < GetInputsNumberForLayer(l); i++)
+                {
                     for (int j = 0; j < _nonInputLayerSizes[l]; j++)
                     {
                         double weightDelta = learningRate * _deltas[l][j] * GetInputFromLayer(inputs, l, i) + momentumRate * _previousWeightDeltas[l][i][j];
                         _previousWeightDeltas[l][i][j] = weightDelta;
                         _weights[l][i][j] -= weightDelta;
                     }
+                }
+            }
         }
 
         private void UpdateBiases(double learningRate, double momentumRate)
         {
             for (int l = 0; l < _layerNumber; l++)
+            {
                 for (int i = 0; i < _nonInputLayerSizes[l]; i++)
                 {
                     double biasDelta = learningRate * _deltas[l][i] + momentumRate * _previousBiasDeltas[l][i];
                     _previousBiasDeltas[l][i] = biasDelta;
                     _biases[l][i] -= biasDelta;
                 }
+            }
         }
 
         private double GetInputFromLayer(double[] inputs, int layerIndex, int inputIndex)

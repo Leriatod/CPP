@@ -1,4 +1,4 @@
-namespace CPP.Core.Models
+namespace WebApi.Core.Models
 {
     public class Car
     {

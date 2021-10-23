@@ -1,4 +1,4 @@
-namespace CPP.Core
+namespace WebApi.Core
 {
     public interface INN
     {

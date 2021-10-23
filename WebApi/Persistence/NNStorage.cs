@@ -1,9 +1,9 @@
 using System.IO;
 using System.Text.Json;
-using CPP.Core;
-using CPP.Core.Models;
+using WebApi.Core;
+using WebApi.Core.Models;
 
-namespace CPP.Persistence
+namespace WebApi.Persistence
 {
     public class NNStorage : INNStorage
     {
@@ -12,6 +12,7 @@ namespace CPP.Persistence
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
+
         public NNCoefficients Load()
         {
             string json = File.ReadAllText(_filePath);

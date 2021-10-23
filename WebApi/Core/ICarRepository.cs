@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using CPP.Core.Models;
+using WebApi.Core.Models;
 
-namespace CPP.Core
+namespace WebApi.Core
 {
     public interface ICarRepository
     {
