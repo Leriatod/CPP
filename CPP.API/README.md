@@ -1,3 +1,9 @@
-The purpose of this project is to predict cars prices based on their features. 
-We use a car dataset (created from many resources) to train our model so it fits well. 
-Neural network was used as machine learning technique to solve this task.
+Web API project build with AspNetCore framework to provide endpoints for managing cars' data and estimating cars' prices based on their features.
+
+To run this project:
+
+- make sure your target framework is net5.0 or higher
+
+- make sure you are in CPP.API folder
+
+- use "dotnet run" command
