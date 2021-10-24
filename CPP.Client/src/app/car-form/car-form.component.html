@@ -1,1 +1,110 @@
-<p>car-form works!</p>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-body bg-light">
+      <form>
+        <div class="form-group">
+          <label for="maker" class="form-label">Виробник</label>
+          <select class="form-select" id="maker">
+            <option>Виберіть зі списку</option>
+            <option>Виробник 1</option>
+            <option>Виробник 2</option>
+            <option>Виробник 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="model" class="form-label mt-4">Модель</label>
+          <select class="form-select" id="model">
+            <option>Виберіть зі списку</option>
+            <option>Модель 1</option>
+            <option>Модель 2</option>
+            <option>Модель 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="body" class="form-label mt-4">Тип кузова</label>
+          <select class="form-select" id="body">
+            <option>Виберіть зі списку</option>
+            <option>Кузов 1</option>
+            <option>Кузов 2</option>
+            <option>Кузов 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="drive" class="form-label mt-4">Тип приводу</label>
+          <select class="form-select" id="drive">
+            <option>Виберіть зі списку</option>
+            <option>Привод 1</option>
+            <option>Привод 2</option>
+            <option>Привод 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="transmission" class="form-label mt-4">Трансмісія</label>
+          <select class="form-select" id="transmission">
+            <option>Виберіть зі списку</option>
+            <option>Трансмісія 1</option>
+            <option>Трансмісія 2</option>
+            <option>Трансмісія 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="engineCapacity" class="form-label mt-4"
+            >Об'єм двигуна</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="engineCapacity"
+            placeholder="Введіть об'єм двигуна (в см кубічних) ..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="horsePower" class="form-label mt-4">Кінська сила</label>
+          <input
+            type="number"
+            class="form-control"
+            id="horsePower"
+            placeholder="Введіть потужність (в кінських силах) ..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="fuel" class="form-label mt-4">Вид палива</label>
+          <select class="form-select" id="fuel">
+            <option>Виберіть зі списку</option>
+            <option>Паливо 1</option>
+            <option>Паливо 2</option>
+            <option>Паливо 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="distanceDriven" class="form-label mt-4">Пробіг</label>
+          <input
+            type="number"
+            class="form-control"
+            id="distanceDriven"
+            placeholder="Введіть пробіг (в км) ..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="year" class="form-label mt-4">Рік випуску</label>
+          <input
+            type="number"
+            class="form-control"
+            id="year"
+            placeholder="Введіть потужність (в кінських силах) ..."
+          />
+        </div>
+        <br />
+        <button class="btn btn-primary">Встановити ціну</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="sticky-top">
+      <div class="text-center">
+        <h2>Рекомендована ціна</h2>
+        <h4 class="text-success">{{ 0 | currency }}</h4>
+      </div>
+    </div>
+  </div>
+</div>

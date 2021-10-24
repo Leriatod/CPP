@@ -3,3 +3,19 @@
 body {
   padding-top: 50px;
 }
+
+body::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: white;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: gray;
+}
+
+.sticky-top {
+  top: 100px;
+}
