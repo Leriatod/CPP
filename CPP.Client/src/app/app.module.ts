@@ -5,15 +5,16 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 
 import { AppComponent } from "./app.component";
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from "./navbar/navbar.component";
+import { CarFormComponent } from "./car-form/car-form.component";
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [AppComponent, NavbarComponent, CarFormComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([{ path: "", component: CarFormComponent }]),
   ],
   providers: [],
   bootstrap: [AppComponent],
