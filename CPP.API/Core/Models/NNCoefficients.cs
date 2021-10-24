@@ -1,9 +1,10 @@
-namespace WebApi.Core.Models
+namespace CPP.API.Core.Models
 {
     public class NNCoefficients
     {
         public double[][] Biases { get; set; }
         public double[][][] Weights { get; set; }
+
         public NNCoefficients(double[][] biases, double[][][] weights)
         {
             Biases = biases;

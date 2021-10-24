@@ -1,7 +1,7 @@
 using System;
-using WebApi.Core;
+using CPP.API.Core;
 
-namespace WebApi.Persistence
+namespace CPP.API.Persistence
 {
     public class NN : INN
     {
@@ -177,7 +177,7 @@ namespace WebApi.Persistence
 
         private double GetInputFromLayer(double[] inputs, int layerIndex, int inputIndex)
         {
-            return (layerIndex == 0 ? inputs[inputIndex] : _layerOutputs[layerIndex - 1][inputIndex]);
+            return layerIndex == 0 ? inputs[inputIndex] : _layerOutputs[layerIndex - 1][inputIndex];
         }
 
         private int GetInputsNumberForLayer(int layerIndex)

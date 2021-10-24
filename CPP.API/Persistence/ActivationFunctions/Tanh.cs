@@ -1,7 +1,7 @@
 using System;
-using WebApi.Core;
+using CPP.API.Core;
 
-namespace WebApi.Persistence.ActivationFunctions
+namespace CPP.API.Persistence.ActivationFunctions
 {
     public class Tanh : IActivationFunction
     {

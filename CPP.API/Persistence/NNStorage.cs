@@ -1,14 +1,14 @@
 using System.IO;
 using System.Text.Json;
-using WebApi.Core;
-using WebApi.Core.Models;
+using CPP.API.Core;
+using CPP.API.Core.Models;
 
-namespace WebApi.Persistence
+namespace CPP.API.Persistence
 {
     public class NNStorage : INNStorage
     {
         private readonly string _filePath = "Persistence/model.json";
-        private readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions()
+        private readonly JsonSerializerOptions _serializerOptions = new()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };

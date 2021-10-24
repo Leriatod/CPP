@@ -1,4 +1,4 @@
-namespace WebApi.Core
+namespace CPP.API.Core
 {
     public interface IActivationFunction
     {
