@@ -7,7 +7,7 @@ namespace CPP.API.Persistence
 {
     public class NNStorage : INNStorage
     {
-        private readonly string _filePath = "Persistence/model.json";
+        private readonly string _filePath = "Data/model.json";
         private readonly JsonSerializerOptions _serializerOptions = new()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
