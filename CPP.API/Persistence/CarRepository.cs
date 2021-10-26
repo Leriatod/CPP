@@ -11,7 +11,7 @@ namespace CPP.API.Persistence
 {
     public class CarRepository : ICarRepository
     {
-        private readonly string _fileName = "Persistence/CarDataset/audi_cars.csv";
+        private readonly string _fileName = "Data/cars.csv";
 
         public IEnumerable<Car> GetAll()
         {

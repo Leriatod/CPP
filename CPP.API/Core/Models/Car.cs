@@ -4,14 +4,14 @@ namespace CPP.API.Core.Models
     {
         public string Producer { get; set; }
         public string Model { get; set; }
-        public string BodyStyle { get; set; }
-        public double Price { get; set; }
+        public string Body { get; set; }
+        public string Drive { get; set; }
+        public string Transmission { get; set; }
+        public double Engine { get; set; }
+        public double Horsepower { get; set; }
+        public string Fuel { get; set; }
+        public double Distance { get; set; }
         public int Year { get; set; }
-        public double KilometersDriven { get; set; }
-        public string TransmissionType { get; set; }
-        // FIXME: shouldn't be string, we should change our data format so this feature is number 
-        public string EngineCapacity { get; set; }
-        public string Color { get; set; }
-        public bool IsActive { get; set; }
+        public double Price { get; set; }
     }
 }
