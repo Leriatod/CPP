@@ -1,13 +1,14 @@
 using System;
 using CPP.API.Core;
+using CPP.API.Extensions;
 
 namespace CPP.API.Persistence
 {
     public class NN : INN
     {
-        private readonly IActivationFunction[] _activationFunctions;
-        private readonly int _layerNumber;
-        private readonly int _inputSize;
+        private IActivationFunction[] _activationFunctions;
+        private int _layerNumber;
+        private int _inputSize;
         private int[] _nonInputLayerSizes;
         private double[][] _layerOutputs;
         private double[][] _layerInputs;
@@ -17,17 +18,12 @@ namespace CPP.API.Persistence
         private double[][] _previousBiasDeltas;
         private double[][][] _previousWeightDeltas;
 
-        public NN(int[] layerSizes, IActivationFunction[] activationFunctions)
+        public void Initialize(int[] layerSizes, IActivationFunction[] activationFunctions)
         {
             _activationFunctions = activationFunctions;
             _inputSize = layerSizes[0];
             _layerNumber = layerSizes.Length - 1;
-            Initialize(layerSizes);
-            SetRandomWeightsAndBiases();
-        }
 
-        private void Initialize(int[] layerSizes)
-        {
             _nonInputLayerSizes = new int[_layerNumber];
             for (int i = 0; i < _layerNumber; i++)
             {
@@ -59,21 +55,27 @@ namespace CPP.API.Persistence
             }
         }
 
-        private void SetRandomWeightsAndBiases()
+        public void Set(double[][][] weights, double[][] biases)
+        {
+            _weights = weights;
+            _biases = biases;
+        }
+
+        public void SetRandom()
         {
             var random = new Random();
             for (int l = 0; l < _layerNumber; l++)
             {
                 for (int j = 0; j < _nonInputLayerSizes[l]; j++)
                 {
-                    _biases[l][j] = random.NextDouble();
+                    _biases[l][j] = random.NextDoubleBetween(-1, 1);
                 }
 
                 for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                 {
                     for (int j = 0; j < _nonInputLayerSizes[l]; j++)
                     {
-                        _weights[l][i][j] = random.NextDouble();
+                        _weights[l][i][j] = random.NextDoubleBetween(-1, 1);
                     }
                 }
             }
