@@ -1,5 +1,6 @@
 using CPP.API.Core;
 using CPP.API.Persistence;
+using CPP.API.Persistence.CarEncoders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,7 @@ namespace CPP.API
             services.AddControllersWithViews();
             services.AddTransient<ICarRepository, CarRepository>();
             services.AddTransient<INNStorage, NNStorage>();
+            services.AddTransient<ICarEncoder, CarOneHotEncoder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
