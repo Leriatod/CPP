@@ -23,7 +23,7 @@ namespace CPP.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddTransient<ICarRepository, CarRepository>();
+            services.AddTransient<ICarReader, CarReader>();
             services.AddTransient<INNStorage, NNStorage>();
             services.AddTransient<ICarEncoder, CarOneHotEncoder>();
             services.AddTransient<ICarScaler, CarStandardScaler>();
