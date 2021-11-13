@@ -7,6 +7,6 @@ namespace CPP.API.Core
     {
         IEnumerable<Car> ReadTrainData();
         IEnumerable<Car> ReadTestData();
-
+        CarFeatureCategories ReadCarFeatureCategories();
     }
 }

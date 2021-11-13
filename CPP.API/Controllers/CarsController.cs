@@ -1,24 +1,34 @@
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using CPP.API.Core;
 using CPP.API.Core.Models;
-using Microsoft.AspNetCore.Mvc;
+using CPP.API.Persistence;
 
 namespace CPP.API.Controllers
 {
     [Route("/api/cars")]
     public class CarsController : ControllerBase
     {
-        private readonly ICarRepository _repository;
+        private readonly ICarReader _carReader;
+        private readonly NNCarService _carService;
 
-        public CarsController(ICarRepository repository)
+        public CarsController(ICarReader carReader, NNCarService carService)
         {
-            _repository = repository;
+            _carService = carService;
+            _carReader = carReader;
         }
 
         [HttpGet]
         public IEnumerable<Car> GetAll()
         {
-            return _repository.GetAll();
+            return _carReader.ReadTrainData();
+        }
+
+        [HttpGet]
+        [Route("feature-categories")]
+        public CarFeatureCategories GetCarFeatureCategories()
+        {
+            return _carReader.ReadCarFeatureCategories();
         }
     }
 }

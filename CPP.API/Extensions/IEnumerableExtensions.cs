@@ -17,5 +17,10 @@ namespace CPP.API.Extensions
 
             return stdDev;
         }
+
+        public static IEnumerable<string> SelectOrderedUniqueStrings<T>(this IEnumerable<T> collection, Func<T, string> getStringField)
+        {
+            return collection.Select(getStringField).Distinct().OrderBy(s => s);
+        }
     }
 }

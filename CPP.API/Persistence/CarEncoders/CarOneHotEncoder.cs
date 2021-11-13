@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using CPP.API.Core.Models;
 using CPP.API.Core;
+using CPP.API.Extensions;
 
 namespace CPP.API.Persistence.CarEncoders
 {
@@ -30,9 +31,7 @@ namespace CPP.API.Persistence.CarEncoders
             IEnumerable<Car> cars)
         {
             var uniqueCategories = cars
-                .Select(getCategoricalColumnValue)
-                .Distinct()
-                .OrderBy(s => s)
+                .SelectOrderedUniqueStrings(getCategoricalColumnValue)
                 .ToList();
 
             var vectorByCategory = new Dictionary<string, double[]>();

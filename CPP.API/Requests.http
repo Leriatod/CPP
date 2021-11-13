@@ -1,1 +1,3 @@
 GET http://localhost:5000/api/cars
+###
+GET http://localhost:5000/api/cars/feature-categories
