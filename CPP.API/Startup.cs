@@ -24,9 +24,11 @@ namespace CPP.API
         {
             services.AddControllersWithViews();
             services.AddTransient<ICarReader, CarReader>();
-            services.AddTransient<INNStorage, NNStorage>();
             services.AddTransient<ICarEncoder, CarOneHotEncoder>();
             services.AddTransient<ICarScaler, CarStandardScaler>();
+            services.AddTransient<INNStorage, NNStorage>();
+            services.AddTransient<INN, NNRMSprop>();
+            services.AddTransient<NNCarService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
