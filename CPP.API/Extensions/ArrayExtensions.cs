@@ -13,5 +13,10 @@ namespace CPP.API.Extensions
         {
             return data.Select(c => c.Last()).ToArray();
         }
+
+        public static double[] RemoveLast(this double[] array)
+        {
+            return array.Take(array.Length - 1).ToArray();
+        }
     }
 }

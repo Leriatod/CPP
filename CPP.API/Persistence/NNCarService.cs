@@ -7,7 +7,7 @@ using CPP.API.Persistence.ActivationFunctions;
 
 namespace CPP.API.Persistence
 {
-    public class NNCarService
+    public class NNCarService : INNCarService
     {
         private bool isNNInitialized = false;
 
@@ -32,7 +32,9 @@ namespace CPP.API.Persistence
 
         public double PredictPrice(Car car)
         {
-            double[] input = _oneHotEncoder.Encode(_standardScaler.Scale(car));
+            double[] input = _oneHotEncoder
+                .Encode(_standardScaler.Scale(car))
+                .RemoveLast();
 
             if (!isNNInitialized)
             {

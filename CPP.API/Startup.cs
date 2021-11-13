@@ -24,7 +24,7 @@ namespace CPP.API
             services.AddTransient<ICarReader, CarReader>();
             services.AddTransient<INNStorage, NNStorage>();
             services.AddTransient<INN, NNRMSprop>();
-            services.AddTransient<NNCarService>();
+            services.AddTransient<INNCarService, NNCarService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

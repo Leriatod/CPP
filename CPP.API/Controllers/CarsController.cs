@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using CPP.API.Core;
 using CPP.API.Core.Models;
-using CPP.API.Persistence;
 
 namespace CPP.API.Controllers
 {
@@ -10,18 +9,24 @@ namespace CPP.API.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ICarReader _carReader;
-        private readonly NNCarService _carService;
+        private readonly INNCarService _carService;
 
-        public CarsController(ICarReader carReader, NNCarService carService)
+        public CarsController(ICarReader carReader, INNCarService carService)
         {
             _carService = carService;
             _carReader = carReader;
         }
 
-        [HttpGet]
         public IEnumerable<Car> GetAll()
         {
-            return _carReader.ReadTrainData();
+            return _carReader.ReadTestData();
+        }
+
+        [HttpGet]
+        [Route("predict")]
+        public int GetPriceForCar([FromBody] Car car)
+        {
+            return (int)_carService.PredictPrice(car);
         }
 
         [HttpGet]

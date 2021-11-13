@@ -1,3 +1,74 @@
 GET http://localhost:5000/api/cars
 ###
 GET http://localhost:5000/api/cars/feature-categories
+###
+GET http://localhost:5000/api/cars/predict
+content-type: application/json
+
+{
+    "producer":"Volkswagen",
+    "model":"Golf IV",
+    "body":"Хетчбек",
+    "drive":"Передній",
+    "transmission":"Ручна / Механіка",
+    "fuel":"Бензин",
+    "engine":1.6,
+    "horsepower":105,
+    "distance":210,
+    "year":2002,
+    "price":5600
+}
+
+###
+GET http://localhost:5000/api/cars/predict
+content-type: application/json
+
+{
+    "producer":"Honda",
+    "model":"CR-V",
+    "body":"Позашляховик / Кросовер",
+    "drive":"Повний",
+    "transmission":"Автомат",
+    "fuel":"Газ / Бензин",
+    "engine":2.4,
+    "horsepower":299.2,
+    "distance":162,
+    "year":2008,
+    "price":12999
+}
+
+###
+GET http://localhost:5000/api/cars/predict
+content-type: application/json
+
+{
+    "producer":"Volkswagen",
+    "model":"Golf VII",
+    "body":"Унiверсал",
+    "drive":"Передній",
+    "transmission":"Ручна / Механіка",
+    "fuel":"Дизель",
+    "engine":1.6,
+    "horsepower":110,
+    "distance":236,
+    "year":2014,
+    "price":11800
+}
+
+###
+GET http://localhost:5000/api/cars/predict
+content-type: application/json
+
+{
+    "producer":"Mazda",
+    "model":"6",
+    "body":"Седан",
+    "drive":"Передній",
+    "transmission":"Ручна / Механіка",
+    "fuel":"Газ / Бензин",
+    "engine":2,
+    "horsepower":147,
+    "distance":202,
+    "year":2006,
+    "price":6200
+}
