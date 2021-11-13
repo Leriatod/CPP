@@ -1,7 +1,5 @@
 using CPP.API.Core;
 using CPP.API.Persistence;
-using CPP.API.Persistence.CarEncoders;
-using CPP.API.Persistence.CarScalers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,8 +22,6 @@ namespace CPP.API
         {
             services.AddControllersWithViews();
             services.AddTransient<ICarReader, CarReader>();
-            services.AddTransient<ICarEncoder, CarOneHotEncoder>();
-            services.AddTransient<ICarScaler, CarStandardScaler>();
             services.AddTransient<INNStorage, NNStorage>();
             services.AddTransient<INN, NNRMSprop>();
             services.AddTransient<NNCarService>();

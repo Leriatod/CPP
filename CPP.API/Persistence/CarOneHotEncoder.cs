@@ -2,21 +2,20 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using CPP.API.Core.Models;
-using CPP.API.Core;
 using CPP.API.Extensions;
 
-namespace CPP.API.Persistence.CarEncoders
+namespace CPP.API.Persistence
 {
-    public class CarOneHotEncoder : ICarEncoder
+    public class CarOneHotEncoder
     {
-        private Dictionary<string, double[]> _vectorByProducer;
-        private Dictionary<string, double[]> _vectorByModel;
-        private Dictionary<string, double[]> _vectorByBody;
-        private Dictionary<string, double[]> _vectorByDrive;
-        private Dictionary<string, double[]> _vectorByTransmission;
-        private Dictionary<string, double[]> _vectorByFuel;
+        private readonly Dictionary<string, double[]> _vectorByProducer;
+        private readonly Dictionary<string, double[]> _vectorByModel;
+        private readonly Dictionary<string, double[]> _vectorByBody;
+        private readonly Dictionary<string, double[]> _vectorByDrive;
+        private readonly Dictionary<string, double[]> _vectorByTransmission;
+        private readonly Dictionary<string, double[]> _vectorByFuel;
 
-        public void InitializeFrom(IEnumerable<Car> cars)
+        public CarOneHotEncoder(IEnumerable<Car> cars)
         {
             _vectorByProducer = GetDictionaryEncoderForColumn(c => c.Producer, cars);
             _vectorByModel = GetDictionaryEncoderForColumn(c => c.Model, cars);

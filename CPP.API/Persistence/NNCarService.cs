@@ -10,27 +10,21 @@ namespace CPP.API.Persistence
     public class NNCarService
     {
         private bool isNNInitialized = false;
+
         private readonly ICarReader _reader;
-        private readonly ICarEncoder _encoder;
-        private readonly ICarScaler _scaler;
         private readonly INN _nn;
         private readonly INNStorage _nnStorage;
         private readonly IEnumerable<Car> _trainData;
+        private readonly CarOneHotEncoder _oneHotEncoder;
+        private readonly CarStandardScaler _standardScaler;
 
-        public NNCarService(
-            ICarReader reader,
-            ICarEncoder encoder,
-            ICarScaler scaler,
-            INN nn,
-            INNStorage nnStorage)
+        public NNCarService(INN nn, INNStorage nnStorage, ICarReader reader)
         {
             _reader = reader;
             _trainData = _reader.ReadTrainData();
 
-            _encoder = encoder;
-            _scaler = scaler;
-            _encoder.InitializeFrom(_trainData);
-            _scaler.InitializeFrom(_trainData);
+            _oneHotEncoder = new CarOneHotEncoder(_trainData);
+            _standardScaler = new CarStandardScaler(_trainData);
 
             _nn = nn;
             _nnStorage = nnStorage;
@@ -38,7 +32,7 @@ namespace CPP.API.Persistence
 
         public double PredictPrice(Car car)
         {
-            double[] input = _encoder.Encode(_scaler.Scale(car));
+            double[] input = _oneHotEncoder.Encode(_standardScaler.Scale(car));
 
             if (!isNNInitialized)
             {
@@ -55,7 +49,7 @@ namespace CPP.API.Persistence
 
         public void TrainNN(int epochNumber)
         {
-            double[][] data = _encoder.EncodeAll(_scaler.ScaleAll(_trainData));
+            double[][] data = _oneHotEncoder.EncodeAll(_standardScaler.ScaleAll(_trainData));
             double[][] inputs = data.RemoveLastColumn();
             double[] targetPrices = data.GetLastColumn();
 

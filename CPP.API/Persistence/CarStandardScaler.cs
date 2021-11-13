@@ -2,22 +2,21 @@ using System.Collections.Generic;
 using CPP.API.Core.Models;
 using System.Linq;
 using CPP.API.Extensions;
-using CPP.API.Core;
 
-namespace CPP.API.Persistence.CarScalers
+namespace CPP.API.Persistence
 {
-    public class CarStandardScaler : ICarScaler
+    public class CarStandardScaler
     {
-        private double _meanEngine;
-        private double _meanHorsepower;
-        private double _meanDistance;
-        private double _meanYear;
-        private double _stdDevEngine;
-        private double _stdDevHorsepower;
-        private double _stdDevDistance;
-        private double _stdDevYear;
+        private readonly double _meanEngine;
+        private readonly double _meanHorsepower;
+        private readonly double _meanDistance;
+        private readonly double _meanYear;
+        private readonly double _stdDevEngine;
+        private readonly double _stdDevHorsepower;
+        private readonly double _stdDevDistance;
+        private readonly double _stdDevYear;
 
-        public void InitializeFrom(IEnumerable<Car> cars)
+        public CarStandardScaler(IEnumerable<Car> cars)
         {
             _meanEngine = cars.Average(c => c.Engine);
             _meanHorsepower = cars.Average(c => c.Horsepower);
