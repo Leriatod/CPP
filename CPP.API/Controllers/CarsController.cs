@@ -22,9 +22,9 @@ namespace CPP.API.Controllers
             return _carReader.ReadTestData();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("predict")]
-        public int GetPriceForCar([FromBody] Car car)
+        public int PredictPriceForCar([FromBody] Car car)
         {
             return (int)_carService.PredictPrice(car);
         }

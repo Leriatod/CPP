@@ -31,6 +31,8 @@ export class CarFormComponent implements OnInit {
     year: null,
   };
 
+  price: number = 0.0;
+
   constructor(private carService: CarService) {}
 
   ngOnInit() {
@@ -42,5 +44,11 @@ export class CarFormComponent implements OnInit {
   onProducerChange(producer: string) {
     this.car.producer = producer;
     this.car.model = "";
+  }
+
+  predictPrice() {
+    this.carService.predictPriceForCar(this.car).subscribe((price) => {
+      this.price = price;
+    });
   }
 }

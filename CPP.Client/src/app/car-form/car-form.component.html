@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-6">
     <div class="card card-body bg-light">
-      <form>
+      <form #f="ngForm" (ngSubmit)="predictPrice()">
         <div class="form-group">
           <label for="producer" class="form-label">Виробник</label>
           <select
@@ -91,46 +91,104 @@
             </option>
           </select>
         </div>
+
         <div class="form-group">
-          <label for="engineCapacity" class="form-label mt-4"
-            >Об'єм двигуна</label
-          >
+          <label for="engine" class="form-label mt-4">Об'єм двигуна</label>
           <input
+            #engine="ngModel"
+            id="engine"
+            name="engine"
+            [(ngModel)]="car.engine"
             type="number"
             class="form-control"
-            id="engineCapacity"
-            placeholder="Введіть об'єм двигуна (в см кубічних) ..."
+            placeholder="Введіть об'єм двигуна (в літрах) ..."
+            [min]="0"
+            required
           />
         </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="engine.touched && engine.invalid"
+        >
+          <div *ngIf="engine.errors.required">
+            Об'єм двигуна є обов'язковим.
+          </div>
+          <div *ngIf="engine.errors.min">
+            Об'єм двигуна не може бути від'ємним.
+          </div>
+        </div>
+
         <div class="form-group">
-          <label for="horsePower" class="form-label mt-4">Кінська сила</label>
+          <label for="horsepower" class="form-label mt-4">Кінська сила</label>
           <input
+            #horsepower="ngModel"
+            id="horsepower"
+            name="horsepower"
+            [(ngModel)]="car.horsepower"
             type="number"
             class="form-control"
-            id="horsePower"
             placeholder="Введіть потужність (в кінських силах) ..."
+            [min]="0"
+            required
           />
         </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="horsepower.touched && horsepower.invalid"
+        >
+          <div *ngIf="horsepower.errors.required">
+            Кінська сила є обов'язковою.
+          </div>
+          <div *ngIf="horsepower.errors.min">
+            Кінська сила не може бути від'ємною.
+          </div>
+        </div>
+
         <div class="form-group">
-          <label for="distanceDriven" class="form-label mt-4">Пробіг</label>
+          <label for="distance" class="form-label mt-4">Пробіг</label>
           <input
+            #distance="ngModel"
+            id="distance"
+            name="distance"
+            [(ngModel)]="car.distance"
             type="number"
             class="form-control"
-            id="distanceDriven"
             placeholder="Введіть пробіг (в км) ..."
+            [min]="0"
+            required
           />
         </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="distance.touched && distance.invalid"
+        >
+          <div *ngIf="distance.errors.required">Пробіг є обов'язковим.</div>
+          <div *ngIf="distance.errors.min">Пробіг не може бути від'ємним.</div>
+        </div>
+
         <div class="form-group">
           <label for="year" class="form-label mt-4">Рік випуску</label>
           <input
+            #year="ngModel"
+            id="year"
+            name="year"
+            [(ngModel)]="car.year"
             type="number"
             class="form-control"
-            id="year"
             placeholder="Введіть потужність (в кінських силах) ..."
+            [min]="0"
+            required
           />
         </div>
+        <div class="alert alert-danger" *ngIf="year.touched && year.invalid">
+          <div *ngIf="year.errors.required">Рік випуску є обов'язковим.</div>
+          <div *ngIf="year.errors.min">Рік не може бути від'ємним.</div>
+        </div>
         <br />
-        <button class="btn btn-primary">Встановити ціну</button>
+
+        <button [disabled]="f.invalid" type="submit" class="btn btn-primary">
+          Встановити ціну
+        </button>
       </form>
     </div>
   </div>
@@ -138,7 +196,7 @@
     <div class="sticky-top">
       <div class="text-center">
         <h2>Рекомендована ціна</h2>
-        <h4 class="text-success">{{ 0 | currency }}</h4>
+        <h4 class="text-success">{{ price | currency }}</h4>
       </div>
     </div>
   </div>
