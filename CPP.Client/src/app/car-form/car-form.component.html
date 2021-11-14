@@ -3,48 +3,92 @@
     <div class="card card-body bg-light">
       <form>
         <div class="form-group">
-          <label for="maker" class="form-label">Виробник</label>
-          <select class="form-select" id="maker">
-            <option>Виберіть зі списку</option>
-            <option>Виробник 1</option>
-            <option>Виробник 2</option>
-            <option>Виробник 3</option>
+          <label for="producer" class="form-label">Виробник</label>
+          <select
+            class="form-select"
+            id="producer"
+            (change)="onProducerChange($event.target.value)"
+          >
+            <option value="">Виберіть зі списку</option>
+            <option
+              *ngFor="let p of featureCategories.producers"
+              value="{{ p }}"
+            >
+              {{ p }}
+            </option>
           </select>
         </div>
         <div class="form-group">
           <label for="model" class="form-label mt-4">Модель</label>
-          <select class="form-select" id="model">
-            <option>Виберіть зі списку</option>
-            <option>Модель 1</option>
-            <option>Модель 2</option>
-            <option>Модель 3</option>
+          <select
+            class="form-select"
+            id="model"
+            name="model"
+            [(ngModel)]="car.model"
+          >
+            <option value="">Виберіть зі списку</option>
+            <option *ngFor="let m of featureCategories.models" value="{{ m }}">
+              {{ m }}
+            </option>
           </select>
         </div>
         <div class="form-group">
           <label for="body" class="form-label mt-4">Тип кузова</label>
-          <select class="form-select" id="body">
-            <option>Виберіть зі списку</option>
-            <option>Кузов 1</option>
-            <option>Кузов 2</option>
-            <option>Кузов 3</option>
+          <select
+            class="form-select"
+            id="body"
+            name="body"
+            [(ngModel)]="car.body"
+          >
+            <option value="">Виберіть зі списку</option>
+            <option *ngFor="let b of featureCategories.bodies" value="{{ b }}">
+              {{ b }}
+            </option>
           </select>
         </div>
         <div class="form-group">
           <label for="drive" class="form-label mt-4">Тип приводу</label>
-          <select class="form-select" id="drive">
-            <option>Виберіть зі списку</option>
-            <option>Привод 1</option>
-            <option>Привод 2</option>
-            <option>Привод 3</option>
+          <select
+            class="form-select"
+            id="drive"
+            name="drive"
+            [(ngModel)]="car.drive"
+          >
+            <option value="">Виберіть зі списку</option>
+            <option *ngFor="let d of featureCategories.drives" value="{{ d }}">
+              {{ d }}
+            </option>
           </select>
         </div>
         <div class="form-group">
           <label for="transmission" class="form-label mt-4">Трансмісія</label>
-          <select class="form-select" id="transmission">
-            <option>Виберіть зі списку</option>
-            <option>Трансмісія 1</option>
-            <option>Трансмісія 2</option>
-            <option>Трансмісія 3</option>
+          <select
+            class="form-select"
+            id="transmission"
+            name="transmission"
+            [(ngModel)]="car.transmission"
+          >
+            <option value="">Виберіть зі списку</option>
+            <option
+              *ngFor="let t of featureCategories.transmissions"
+              value="{{ t }}"
+            >
+              {{ t }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fuel" class="form-label mt-4">Вид палива</label>
+          <select
+            class="form-select"
+            id="fuel"
+            name="fuel"
+            [(ngModel)]="car.fuel"
+          >
+            <option value="">Виберіть зі списку</option>
+            <option *ngFor="let f of featureCategories.fuels" value="{{ f }}">
+              {{ f }}
+            </option>
           </select>
         </div>
         <div class="form-group">
@@ -66,15 +110,6 @@
             id="horsePower"
             placeholder="Введіть потужність (в кінських силах) ..."
           />
-        </div>
-        <div class="form-group">
-          <label for="fuel" class="form-label mt-4">Вид палива</label>
-          <select class="form-select" id="fuel">
-            <option>Виберіть зі списку</option>
-            <option>Паливо 1</option>
-            <option>Паливо 2</option>
-            <option>Паливо 3</option>
-          </select>
         </div>
         <div class="form-group">
           <label for="distanceDriven" class="form-label mt-4">Пробіг</label>

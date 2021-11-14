@@ -1,4 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { CarService } from "../car.service";
+import { Car } from "../models/car";
+import { CarFeatureCategories } from "../models/car-feature-categories";
 
 @Component({
   selector: "car-form",
@@ -6,7 +9,38 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./car-form.component.css"],
 })
 export class CarFormComponent implements OnInit {
-  constructor() {}
+  featureCategories: CarFeatureCategories = {
+    producers: [],
+    models: [],
+    bodies: [],
+    drives: [],
+    transmissions: [],
+    fuels: [],
+  };
 
-  ngOnInit() {}
+  car: Car = {
+    producer: "",
+    model: "",
+    body: "",
+    drive: "",
+    transmission: "",
+    fuel: "",
+    engine: null,
+    horsepower: null,
+    distance: null,
+    year: null,
+  };
+
+  constructor(private carService: CarService) {}
+
+  ngOnInit() {
+    this.carService.getCarFeatureCategories().subscribe((featureCategories) => {
+      this.featureCategories = featureCategories;
+    });
+  }
+
+  onProducerChange(producer: string) {
+    this.car.producer = producer;
+    this.car.model = "";
+  }
 }
