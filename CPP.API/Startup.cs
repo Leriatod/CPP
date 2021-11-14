@@ -23,10 +23,10 @@ namespace CPP.API
         {
             services.AddControllersWithViews();
 
-            services.AddTransient<ICarReader, CarReader>();
-            services.AddTransient<INNStorage, NNStorage>();
-            services.AddTransient<INN, NNRMSprop>();
-            services.AddTransient<INNCarService, NNCarService>();
+            services.AddSingleton<ICarReader, CarReader>();
+            services.AddSingleton<INNStorage, NNStorage>();
+            services.AddSingleton<INN, NNRMSprop>();
+            services.AddSingleton<INNCarService, NNCarService>();
 
             services.AddSpaStaticFiles(configuration =>
             {
