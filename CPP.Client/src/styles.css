@@ -19,3 +19,7 @@ body::-webkit-scrollbar-thumb {
 .sticky-top {
   top: 100px;
 }
+
+#ngb-live {
+  display: none;
+}
