@@ -4,11 +4,12 @@ using CPP.API.Extensions;
 
 namespace CPP.API.Persistence
 {
-    public class NNRMSprop : INN
+    public class NNAdam : INN
     {
-        private readonly double _beta = 0.9;
+        private readonly double _beta1 = 0.9;
+        private readonly double _beta2 = 0.999;
         private readonly double _learningRate = 0.001;
-        private readonly double _epsilon = 1e-7;
+        private readonly double _epsilon = 1e-8;
 
         private IActivationFunction[] _activationFunctions;
         private int _layerNumber;
@@ -17,8 +18,10 @@ namespace CPP.API.Persistence
         private double[][] _layerOutputs;
         private double[][] _layerInputs;
         private double[][] _deltas;
-        private double[][] _previousBiasGradientEME;
-        private double[][][] _previousWeightGradientEME;
+        private double[][] _biasSquaredGradientEME;
+        private double[][] _biasGradientEME;
+        private double[][][] _weightSquaredGradientEME;
+        private double[][][] _weightGradientEME;
 
         public double[][][] Weights { get; private set; }
         public double[][] Biases { get; private set; }
@@ -41,8 +44,11 @@ namespace CPP.API.Persistence
             _deltas = new double[_layerNumber][];
             _layerOutputs = new double[_layerNumber][];
             _layerInputs = new double[_layerNumber][];
-            _previousBiasGradientEME = new double[_layerNumber][];
-            _previousWeightGradientEME = new double[_layerNumber][][];
+
+            _biasSquaredGradientEME = new double[_layerNumber][];
+            _weightSquaredGradientEME = new double[_layerNumber][][];
+            _biasGradientEME = new double[_layerNumber][];
+            _weightGradientEME = new double[_layerNumber][][];
             for (int l = 0; l < _layerNumber; l++)
             {
                 Biases[l] = new double[_nonInputLayerSizes[l]];
@@ -51,12 +57,16 @@ namespace CPP.API.Persistence
                 _deltas[l] = new double[_nonInputLayerSizes[l]];
                 _layerOutputs[l] = new double[_nonInputLayerSizes[l]];
                 _layerInputs[l] = new double[_nonInputLayerSizes[l]];
-                _previousBiasGradientEME[l] = new double[_nonInputLayerSizes[l]];
-                _previousWeightGradientEME[l] = new double[GetInputsNumberForLayer(l)][];
+
+                _biasSquaredGradientEME[l] = new double[_nonInputLayerSizes[l]];
+                _weightSquaredGradientEME[l] = new double[GetInputsNumberForLayer(l)][];
+                _biasGradientEME[l] = new double[_nonInputLayerSizes[l]];
+                _weightGradientEME[l] = new double[GetInputsNumberForLayer(l)][];
                 for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                 {
                     Weights[l][i] = new double[_nonInputLayerSizes[l]];
-                    _previousWeightGradientEME[l][i] = new double[_nonInputLayerSizes[l]];
+                    _weightSquaredGradientEME[l][i] = new double[_nonInputLayerSizes[l]];
+                    _weightGradientEME[l][i] = new double[_nonInputLayerSizes[l]];
                 }
             }
         }
@@ -70,6 +80,7 @@ namespace CPP.API.Persistence
         public void SetRandom()
         {
             var random = new Random();
+
             for (int l = 0; l < _layerNumber; l++)
             {
                 for (int j = 0; j < _nonInputLayerSizes[l]; j++)
@@ -163,9 +174,9 @@ namespace CPP.API.Persistence
                     for (int j = 0; j < _nonInputLayerSizes[l]; j++)
                     {
                         double gradient = _deltas[l][j] * GetInputFromLayer(inputs, l, i);
-                        _previousWeightGradientEME[l][i][j] = _beta * _previousWeightGradientEME[l][i][j] +
-                            (1 - _beta) * gradient * gradient;
-                        Weights[l][i][j] -= _learningRate * gradient / Math.Sqrt(_epsilon + _previousWeightGradientEME[l][i][j]);
+                        _weightGradientEME[l][i][j] = _beta1 * _weightGradientEME[l][i][j] + (1 - _beta1) * gradient;
+                        _weightSquaredGradientEME[l][i][j] = _beta2 * _weightSquaredGradientEME[l][i][j] + (1 - _beta2) * Math.Pow(gradient, 2);
+                        Weights[l][i][j] -= _learningRate * _weightGradientEME[l][i][j] / (Math.Sqrt(_weightSquaredGradientEME[l][i][j]) + _epsilon);
                     }
                 }
             }
@@ -178,9 +189,9 @@ namespace CPP.API.Persistence
                 for (int i = 0; i < _nonInputLayerSizes[l]; i++)
                 {
                     double gradient = _deltas[l][i];
-                    _previousBiasGradientEME[l][i] = _beta * _previousBiasGradientEME[l][i] +
-                        (1 - _beta) * gradient * gradient;
-                    Biases[l][i] -= _learningRate * gradient / Math.Sqrt(_epsilon + _previousBiasGradientEME[l][i]);
+                    _biasGradientEME[l][i] = _beta1 * _biasGradientEME[l][i] + (1 - _beta1) * gradient;
+                    _biasSquaredGradientEME[l][i] = _beta2 * _biasSquaredGradientEME[l][i] + (1 - _beta2) * Math.Pow(gradient, 2);
+                    Biases[l][i] -= _learningRate * _biasGradientEME[l][i] / (Math.Sqrt(_biasSquaredGradientEME[l][i]) + _epsilon);
                 }
             }
         }

@@ -25,7 +25,7 @@ namespace CPP.API
 
             services.AddSingleton<ICarReader, CarReader>();
             services.AddSingleton<INNStorage, NNStorage>();
-            services.AddSingleton<INN, NNRMSprop>();
+            services.AddSingleton<INN, NNAdam>();
             services.AddSingleton<INNCarService, NNCarService>();
 
             services.AddSpaStaticFiles(configuration =>

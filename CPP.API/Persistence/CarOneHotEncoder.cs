@@ -71,7 +71,7 @@ namespace CPP.API.Persistence
 
         private static double[] GetVectorByColumnValue(Dictionary<string, double[]> vectorByCategory, string categoryKey)
         {
-            return vectorByCategory.ContainsKey(categoryKey) ?
+            return !string.IsNullOrEmpty(categoryKey) && vectorByCategory.ContainsKey(categoryKey) ?
                 vectorByCategory[categoryKey]
                 : new double[vectorByCategory.Count];
         }
