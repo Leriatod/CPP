@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using CPP.API.Core;
 using CPP.API.Core.Models;
 using CPP.API.Extensions;
 using CPP.API.Persistence.ActivationFunctions;
+using CPP.API.Persistence.Optimizers;
 
 namespace CPP.API.Persistence
 {
@@ -14,15 +17,15 @@ namespace CPP.API.Persistence
         private readonly ICarReader _reader;
         private readonly INN _nn;
         private readonly INNStorage _nnStorage;
-        private readonly IEnumerable<Car> _trainData;
         private readonly CarOneHotEncoder _oneHotEncoder;
         private readonly CarStandardScaler _standardScaler;
+        private readonly IEnumerable<Car> _trainData;
 
         public NNCarService(INN nn, INNStorage nnStorage, ICarReader reader)
         {
             _reader = reader;
-            _trainData = _reader.ReadTrainData();
 
+            _trainData = _reader.ReadTrainData();
             _oneHotEncoder = new CarOneHotEncoder(_trainData);
             _standardScaler = new CarStandardScaler(_trainData);
 
@@ -51,13 +54,16 @@ namespace CPP.API.Persistence
 
         public void TrainNN(int epochNumber)
         {
-            double[][] data = _oneHotEncoder.EncodeAll(_standardScaler.ScaleAll(_trainData));
+            double[][] data = _oneHotEncoder.EncodeAll(_standardScaler.ScaleAll(_trainData)).Shuffle();
             double[][] inputs = data.RemoveLastColumn();
             double[] targetPrices = data.GetLastColumn();
 
             ReinitializeNN(inputs[0].Length);
-
             _nn.SetRandom();
+
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
 
             for (int epochCounter = 0; epochCounter < epochNumber; epochCounter++)
             {
@@ -71,11 +77,14 @@ namespace CPP.API.Persistence
                     double error = _nn.Train(input, target);
                     mse += error;
                     mae += Math.Sqrt(error);
-
-                    if (sampleCounter % 2500 == 1) Console.WriteLine($"MAE = {mae / sampleCounter}");
                 }
                 Console.WriteLine($"Epoch: {epochCounter + 1}, MSE: {mse / inputs.Length}, MAE: {mae / inputs.Length}");
             }
+
+            isNNInitialized = true;
+            stopwatch.Stop();
+            Console.WriteLine($"Training time: {stopwatch.Elapsed.TotalSeconds} seconds.");
+            PrintRSquareWithTestData();
 
             var nnCoefficients = new NNCoefficients(_nn.Biases, _nn.Weights);
             _nnStorage.Save(nnCoefficients);
@@ -84,8 +93,20 @@ namespace CPP.API.Persistence
         private void ReinitializeNN(int inputSize)
         {
             _nn.Initialize(
-                new int[] { inputSize, 256, 128, 64, 1 },
-                new IActivationFunction[] { new ReLU(), new ReLU(), new ReLU(), new Linear() });
+                new int[] { inputSize, 128, 64, 32, 1 },
+                new IActivationFunction[] { new ReLU(), new ReLU(), new ReLU(), new Linear() },
+                new AdamOptimizer());
+        }
+
+        private void PrintRSquareWithTestData()
+        {
+            var testData = _reader.ReadTestData();
+            var targetPrices = testData.Select(car => car.Price);
+            var predictedPrices = testData.Select(car => PredictPrice(car));
+
+            double rSquare = targetPrices.GetRSquare(predictedPrices);
+
+            Console.WriteLine($"Coefficient of determination (R2) = {rSquare}");
         }
     }
 }

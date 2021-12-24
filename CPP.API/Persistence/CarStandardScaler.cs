@@ -22,10 +22,10 @@ namespace CPP.API.Persistence
             _meanHorsepower = cars.Average(c => c.Horsepower);
             _meanDistance = cars.Average(c => c.Distance);
             _meanYear = cars.Average(c => c.Year);
-            _stdDevEngine = cars.Select(c => c.Engine).StdDev();
-            _stdDevHorsepower = cars.Select(c => c.Horsepower).StdDev();
-            _stdDevDistance = cars.Select(c => c.Distance).StdDev();
-            _stdDevYear = cars.Select(c => (double)c.Year).StdDev();
+            _stdDevEngine = cars.Select(c => c.Engine).GetStdDev();
+            _stdDevHorsepower = cars.Select(c => c.Horsepower).GetStdDev();
+            _stdDevDistance = cars.Select(c => c.Distance).GetStdDev();
+            _stdDevYear = cars.Select(c => (double)c.Year).GetStdDev();
         }
 
         public Car Scale(Car car)
