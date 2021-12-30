@@ -24,7 +24,6 @@ namespace CPP.API
             services.AddControllersWithViews();
 
             services.AddSingleton<ICarReader, CarReader>();
-            services.AddSingleton<INNStorage, NNStorage>();
             services.AddSingleton<INN, NN>();
             services.AddSingleton<INNCarService, NNCarService>();
 

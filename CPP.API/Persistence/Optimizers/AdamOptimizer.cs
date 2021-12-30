@@ -3,6 +3,7 @@ using CPP.API.Core;
 
 namespace CPP.API.Persistence.Optimizers
 {
+    [Serializable]
     public class AdamOptimizer : INNOptimizer
     {
         private readonly double _beta1 = 0.9;

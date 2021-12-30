@@ -3,19 +3,21 @@ using CPP.API.Core;
 
 namespace CPP.API.Persistence.Optimizers
 {
+    [Serializable]
     public class MomentumOptimizer : INNOptimizer
     {
         private readonly double _learningRate;
-        private readonly double _beta = 0.9;
+        private readonly double _momentumRate;
 
         private double[][][] _previousWeightsUpdates;
         private double[][] _previousBiasesUpdates;
         private bool _isPreviousWeightsUpdatesInitialized = false;
         private bool _isPreviousBiasesUpdatesInitialized = false;
 
-        public MomentumOptimizer(double learningRate = 0.001)
+        public MomentumOptimizer(double learningRate = 0.001, double momentumRate = 0.9)
         {
             _learningRate = learningRate;
+            _momentumRate = momentumRate;
         }
 
         public void UpdateWeight(double[][][] weights, int layerIndex, int inputIndex, int neuronIndex, double gradient)
@@ -27,7 +29,7 @@ namespace CPP.API.Persistence.Optimizers
 
             gradient = GetClippedGradient(gradient);
 
-            double weightUpdate = _beta * _previousWeightsUpdates[layerIndex][inputIndex][neuronIndex] + _learningRate * gradient;
+            double weightUpdate = _momentumRate * _previousWeightsUpdates[layerIndex][inputIndex][neuronIndex] + _learningRate * gradient;
 
             weights[layerIndex][inputIndex][neuronIndex] -= weightUpdate;
 
@@ -43,7 +45,7 @@ namespace CPP.API.Persistence.Optimizers
 
             gradient = GetClippedGradient(gradient);
 
-            double biasUpdate = _beta * _previousBiasesUpdates[layerIndex][neuronIndex] + _learningRate * gradient;
+            double biasUpdate = _momentumRate * _previousBiasesUpdates[layerIndex][neuronIndex] + _learningRate * gradient;
 
             biases[layerIndex][neuronIndex] -= biasUpdate;
 

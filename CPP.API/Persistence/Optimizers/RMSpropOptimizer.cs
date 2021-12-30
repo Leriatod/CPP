@@ -3,6 +3,7 @@ using CPP.API.Core;
 
 namespace CPP.API.Persistence.Optimizers
 {
+    [Serializable]
     public class RMSpropOptimizer : INNOptimizer
     {
         private readonly double _beta = 0.999;

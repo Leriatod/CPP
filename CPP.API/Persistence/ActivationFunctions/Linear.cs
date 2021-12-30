@@ -1,17 +1,12 @@
+using System;
 using CPP.API.Core;
 
 namespace CPP.API.Persistence.ActivationFunctions
 {
+    [Serializable]
     public class Linear : IActivationFunction
     {
-        public double Evaluate(double value)
-        {
-            return value;
-        }
-
-        public double EvaluateDerivative(double value)
-        {
-            return 1;
-        }
+        public double Evaluate(double value) => value;
+        public double EvaluateDerivative(double value) => 1;
     }
 }
