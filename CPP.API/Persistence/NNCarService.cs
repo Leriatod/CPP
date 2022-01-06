@@ -15,7 +15,7 @@ namespace CPP.API.Persistence
     public class NNCarService : INNCarService
     {
         private readonly string _nnReadFilePath = "Data/adam.bin";
-        private readonly string _nnWriteFilePath = "Data/rmsprop.bin";
+        private readonly string _nnWriteFilePath = "Data/adam2.bin";
         private readonly INN _nn;
         private readonly ICarReader _reader;
         private readonly IEnumerable<Car> _trainData;
@@ -51,7 +51,7 @@ namespace CPP.API.Persistence
         {
             double[][] data = _oneHotEncoder.EncodeAll(_standardScaler.ScaleAll(_trainData)).Shuffle();
             double[][] inputs = data.RemoveLastColumn();
-            double[] targetPrices = data.GetLastColumn();
+            double[][] targetPrices = data.TakeLastColumns(1);
 
             InitializeRandomNN(inputs[0].Length);
 
@@ -66,7 +66,7 @@ namespace CPP.API.Persistence
                 for (int sampleCounter = 0; sampleCounter < inputs.Length; sampleCounter++)
                 {
                     double[] input = inputs[sampleCounter];
-                    double[] target = new double[] { targetPrices[sampleCounter] };
+                    double[] target = targetPrices[sampleCounter];
 
                     double error = _nn.Train(input, target);
                     mse += error;
@@ -89,7 +89,7 @@ namespace CPP.API.Persistence
             _nn.Initialize(
                 new int[] { inputSize, 128, 64, 32, 1 },
                 new IActivationFunction[] { new ReLU(), new ReLU(), new ReLU(), new Linear() },
-                new RMSpropOptimizer());
+                new AdamOptimizer());
 
             _nn.SetRandomCoefficients();
         }

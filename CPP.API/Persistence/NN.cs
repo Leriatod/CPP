@@ -32,18 +32,20 @@ namespace CPP.API.Persistence
 
             for (int l = 0; l < LayerNumber; l++)
             {
-                _biases[l] = new double[layerSizes[l + 1]];
-                _weights[l] = new double[layerSizes[l]][];
+                _weights[l] = new double[layerSizes[l + 1]][];
+                _biases[l] = new double[GetLayerSize(l)];
 
                 _deltas[l] = new double[GetLayerSize(l)];
                 _layerOutputs[l] = new double[GetLayerSize(l)];
                 _layerInputs[l] = new double[GetLayerSize(l)];
 
-                for (int i = 0; i < GetPreviousLayerSize(l); i++)
+                for (int j = 0; j < GetLayerSize(l); j++)
                 {
-                    _weights[l][i] = new double[GetLayerSize(l)];
+                    _weights[l][j] = new double[layerSizes[l]];
                 }
             }
+
+            _optimizer.Initialize(_weights, _biases);
         }
 
         public void SetRandomCoefficients()
@@ -54,12 +56,9 @@ namespace CPP.API.Persistence
                 for (int j = 0; j < GetLayerSize(l); j++)
                 {
                     _biases[l][j] = random.NextDoubleBetween(-1, 1);
-                }
-                for (int i = 0; i < GetPreviousLayerSize(l); i++)
-                {
-                    for (int j = 0; j < GetLayerSize(l); j++)
+                    for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                     {
-                        _weights[l][i][j] = random.NextDoubleBetween(-1, 1);
+                        _weights[l][j][i] = random.NextDoubleBetween(-1, 1);
                     }
                 }
             }
@@ -73,22 +72,21 @@ namespace CPP.API.Persistence
                 for (int j = 0; j < GetLayerSize(l); j++)
                 {
                     _layerInputs[l][j] = _biases[l][j];
-                    for (int i = 0; i < GetPreviousLayerSize(l); i++)
+                    for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                     {
-                        double input = GetInputForNeuron(l, i);
-                        _layerInputs[l][j] += _weights[l][i][j] * input;
+                        double input = GetInputForLayer(l, i);
+                        _layerInputs[l][j] += _weights[l][j][i] * input;
                     }
                     _layerOutputs[l][j] = _activationFunctions[l].Evaluate(_layerInputs[l][j]);
                 }
             }
-            return _layerOutputs[LastLayerIndex].Clone() as double[];
+            return _layerOutputs[LastLayerIndex];
         }
 
         public double Train(double[] inputs, double[] targets)
         {
             double error = BackPropagateError(inputs, targets);
-            UpdateWeights();
-            UpdateBiases();
+            UpdateCoefficients();
             return error;
         }
 
@@ -111,10 +109,10 @@ namespace CPP.API.Persistence
         private double PropagateErrorFromLastLayer(double[] targets, double[] outputs)
         {
             double error = 0.0;
-            for (int i = 0; i < GetLayerSize(LastLayerIndex); i++)
+            for (int j = 0; j < GetLayerSize(LastLayerIndex); j++)
             {
-                double delta = outputs[i] - targets[i];
-                _deltas[LastLayerIndex][i] = delta * _activationFunctions[LastLayerIndex].EvaluateDerivative(_layerInputs[LastLayerIndex][i]);
+                double delta = outputs[j] - targets[j];
+                _deltas[LastLayerIndex][j] = delta * _activationFunctions[LastLayerIndex].EvaluateDerivative(_layerInputs[LastLayerIndex][j]);
                 error += Math.Pow(delta, 2);
             }
             return error;
@@ -127,41 +125,32 @@ namespace CPP.API.Persistence
                 _deltas[layerIndex][i] = 0.0;
                 for (int j = 0; j < GetLayerSize(layerIndex + 1); j++)
                 {
-                    _deltas[layerIndex][i] += _weights[layerIndex + 1][i][j] * _deltas[layerIndex + 1][j];
+                    _deltas[layerIndex][i] += _weights[layerIndex + 1][j][i] * _deltas[layerIndex + 1][j];
                 }
                 _deltas[layerIndex][i] *= _activationFunctions[layerIndex].EvaluateDerivative(_layerInputs[layerIndex][i]);
             }
         }
 
-        private void UpdateWeights()
+        private void UpdateCoefficients()
         {
             for (int l = 0; l < LayerNumber; l++)
             {
-                for (int i = 0; i < GetPreviousLayerSize(l); i++)
+                for (int j = 0; j < GetLayerSize(l); j++)
                 {
-                    for (int j = 0; j < GetLayerSize(l); j++)
+                    double biasGradient = _deltas[l][j];
+                    _optimizer.UpdateBias(l, j, biasGradient);
+
+                    for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                     {
-                        double gradient = _deltas[l][j] * GetInputForNeuron(l, i);
-                        _optimizer.UpdateWeight(_weights, l, i, j, gradient);
+                        double weightGradient = _deltas[l][j] * GetInputForLayer(l, i);
+                        _optimizer.UpdateWeight(l, j, i, weightGradient);
                     }
                 }
             }
         }
 
-        private void UpdateBiases()
-        {
-            for (int l = 0; l < LayerNumber; l++)
-            {
-                for (int i = 0; i < GetLayerSize(l); i++)
-                {
-                    double gradient = _deltas[l][i];
-                    _optimizer.UpdateBias(_biases, l, i, gradient);
-                }
-            }
-        }
-
-        private double GetInputForNeuron(int layerIndex, int neuronIndex) => layerIndex == 0 ? _inputs[neuronIndex] : _layerOutputs[layerIndex - 1][neuronIndex];
-        private int GetLayerSize(int layerIndex) => _biases[layerIndex].Length;
-        private int GetPreviousLayerSize(int layerIndex) => _weights[layerIndex].Length;
+        private double GetInputForLayer(int layerIndex, int inputIndex) => layerIndex == 0 ? _inputs[inputIndex] : _layerOutputs[layerIndex - 1][inputIndex];
+        private int GetLayerSize(int layerIndex) => _weights[layerIndex].Length;
+        private int GetInputsNumberForLayer(int layerIndex) => _weights[layerIndex][0].Length;
     }
 }

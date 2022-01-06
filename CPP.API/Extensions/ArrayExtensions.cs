@@ -7,12 +7,12 @@ namespace CPP.API.Extensions
     {
         public static T[][] RemoveLastColumn<T>(this T[][] data)
         {
-            return data.Select(c => c.SkipLast(1).ToArray()).ToArray();
+            return data.Select(row => row.SkipLast(1).ToArray()).ToArray();
         }
 
-        public static T[] GetLastColumn<T>(this T[][] data)
+        public static T[][] TakeLastColumns<T>(this T[][] data, int columnsNumberToTake)
         {
-            return data.Select(c => c.Last()).ToArray();
+            return data.Select(row => row.Skip(row.Length - columnsNumberToTake).ToArray()).ToArray();
         }
 
         public static T[] RemoveLast<T>(this T[] array)
