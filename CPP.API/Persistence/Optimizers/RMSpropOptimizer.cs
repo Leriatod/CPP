@@ -4,63 +4,43 @@ using CPP.API.Core;
 namespace CPP.API.Persistence.Optimizers
 {
     [Serializable]
-    public class RMSpropOptimizer : INNOptimizer
+    public class RMSpropOptimizer : NNOptimizer
     {
         private readonly double _beta = 0.999;
         private readonly double _epsilon = 1e-8;
-        private readonly double _learningRate;
 
-        private double[][][] _weights;
-        private double[][] _biases;
-        private double[][][] _weightsSquaredGradientEMA;
-        private double[][] _biasesSquaredGradientEMA;
+        private double[][][] _coefficients;
+        private double[][][] _coefficientsSquaredGradientEMA;
 
-        public RMSpropOptimizer(double learningRate = 0.001)
+        public RMSpropOptimizer(double learningRate = 0.001, double clipValue = 0.0) : base(learningRate, clipValue) { }
+
+        public override void Initialize(double[][][] coefficients)
         {
-            _learningRate = learningRate;
-        }
+            _coefficients = coefficients;
 
-        public void Initialize(double[][][] weights, double[][] biases)
-        {
-            _weights = weights;
-            _biases = biases;
-
-            int layerNumber = weights.Length;
-
-            _weightsSquaredGradientEMA = new double[layerNumber][][];
-            _biasesSquaredGradientEMA = new double[layerNumber][];
+            int layerNumber = coefficients.Length;
+            _coefficientsSquaredGradientEMA = new double[layerNumber][][];
 
             for (int l = 0; l < layerNumber; l++)
             {
-                int layerSize = weights[l].Length;
-
-                _weightsSquaredGradientEMA[l] = new double[layerSize][];
-                _biasesSquaredGradientEMA[l] = new double[layerSize];
+                int layerSize = coefficients[l].Length;
+                _coefficientsSquaredGradientEMA[l] = new double[layerSize][];
 
                 for (int j = 0; j < layerSize; j++)
                 {
-                    int inputsNumber = weights[l][j].Length;
-                    _weightsSquaredGradientEMA[l][j] = new double[inputsNumber];
+                    int inputsNumber = coefficients[l][j].Length;
+                    _coefficientsSquaredGradientEMA[l][j] = new double[inputsNumber];
                 }
             }
         }
 
-        public void UpdateWeight(int layerIndex, int neuronIndex, int inputIndex, double gradient)
+        public override void UpdateCoefficient(int layerIndex, int neuronIndex, int inputIndex, double gradient)
         {
-            _weightsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex] =
-                _beta * _weightsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex] + (1 - _beta) * Math.Pow(gradient, 2);
+            _coefficientsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex] =
+                _beta * _coefficientsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex] + (1 - _beta) * Math.Pow(gradient, 2);
 
-            _weights[layerIndex][neuronIndex][inputIndex] -=
-                _learningRate * gradient / (Math.Sqrt(_weightsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex]) + _epsilon);
-        }
-
-        public void UpdateBias(int layerIndex, int neuronIndex, double gradient)
-        {
-            _biasesSquaredGradientEMA[layerIndex][neuronIndex] =
-                _beta * _biasesSquaredGradientEMA[layerIndex][neuronIndex] + (1 - _beta) * Math.Pow(gradient, 2);
-
-            _biases[layerIndex][neuronIndex] -=
-                _learningRate * gradient / (Math.Sqrt(_biasesSquaredGradientEMA[layerIndex][neuronIndex]) + _epsilon);
+            _coefficients[layerIndex][neuronIndex][inputIndex] -=
+                _learningRate * gradient / (Math.Sqrt(_coefficientsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex]) + _epsilon);
         }
     }
 }
