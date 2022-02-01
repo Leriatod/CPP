@@ -26,6 +26,16 @@ namespace CPP.API.Extensions
             return 1 - sumOfSquaredRegression / sumOfSquaredTotal;
         }
 
+        public static double GetMAE(this IEnumerable<double> sample1, IEnumerable<double> sample2)
+        {
+            return sample1.Zip(sample2, (x1, x2) => Math.Abs(x1 - x2)).Average();
+        }
+
+        public static double GetMSE(this IEnumerable<double> sample1, IEnumerable<double> sample2)
+        {
+            return sample1.Zip(sample2, (x1, x2) => Math.Pow(x1 - x2, 2)).Average();
+        }
+
         public static IEnumerable<string> SelectOrderedUniqueStrings<T>(this IEnumerable<T> collection, Func<T, string> getStringField)
         {
             return collection.Select(getStringField).Distinct().OrderBy(s => s);

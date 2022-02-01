@@ -6,7 +6,7 @@ using System.Linq;
 using CPP.API.Core;
 using CPP.API.Core.Models;
 using CPP.API.Extensions;
-using CPP.API.Heplers;
+using CPP.API.Helpers;
 using CPP.API.Persistence.ActivationFunctions;
 using CPP.API.Persistence.Optimizers;
 
@@ -49,11 +49,9 @@ namespace CPP.API.Persistence
 
         public void TrainNN(int epochNumber)
         {
-            double[][] data = _oneHotEncoder.EncodeAll(_standardScaler.ScaleAll(_trainData)).Shuffle();
-            double[][] inputs = data.RemoveLastColumn();
-            double[][] targetPrices = data.TakeLastColumns(1);
+            double[][] data = _oneHotEncoder.EncodeAll(_standardScaler.ScaleAll(_trainData));
 
-            InitializeRandomNN(inputs[0].Length);
+            InitializeRandomNN(inputSize: data[0].Length - 1);
 
             var stopwatch = new Stopwatch();
 
@@ -61,6 +59,10 @@ namespace CPP.API.Persistence
 
             for (int epochCounter = 0; epochCounter < epochNumber; epochCounter++)
             {
+                data = data.Shuffle();
+                double[][] inputs = data.RemoveLastColumn();
+                double[][] targetPrices = data.TakeLastColumns(1);
+
                 double mse = 0.0;
                 double mae = 0.0;
                 for (int sampleCounter = 0; sampleCounter < inputs.Length; sampleCounter++)
@@ -79,7 +81,7 @@ namespace CPP.API.Persistence
 
             Console.WriteLine($"Training time: {stopwatch.Elapsed.TotalSeconds} seconds.");
 
-            PrintRSquareWithTestData();
+            PrintNNPerformanceForTestData();
 
             BinaryHelper.WriteToBinaryFile(_nnWriteFilePath, _nn);
         }
@@ -94,15 +96,16 @@ namespace CPP.API.Persistence
             _nn.SetRandomCoefficients();
         }
 
-        private void PrintRSquareWithTestData()
+        private void PrintNNPerformanceForTestData()
         {
             var testData = _reader.ReadTestData();
             var targetPrices = testData.Select(car => car.Price);
             var predictedPrices = testData.Select(car => PredictPrice(car));
 
-            double rSquare = targetPrices.GetRSquare(predictedPrices);
-
-            Console.WriteLine($"Coefficient of determination (R2) = {rSquare}");
+            Console.WriteLine("Neural network performance on the test data:");
+            Console.WriteLine($"Coefficient of determination (R2) = {targetPrices.GetRSquare(predictedPrices)}");
+            Console.WriteLine($"Mean absolute error (MAE) = {targetPrices.GetMAE(predictedPrices)}");
+            Console.WriteLine($"Mean squared error (MSE) = {targetPrices.GetMSE(predictedPrices)}");
         }
     }
 }

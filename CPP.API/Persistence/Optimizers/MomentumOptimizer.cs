@@ -8,16 +8,18 @@ namespace CPP.API.Persistence.Optimizers
     {
         private readonly double _learningRate;
         private readonly double _momentumRate;
+        private readonly double _clipValue;
 
         private double[][][] _weights;
         private double[][] _biases;
         private double[][][] _previousWeightsUpdates;
         private double[][] _previousBiasesUpdates;
 
-        public MomentumOptimizer(double learningRate = 0.001, double momentumRate = 0.9)
+        public MomentumOptimizer(double learningRate = 0.001, double momentumRate = 0.9, double clipValue = 0.0)
         {
             _learningRate = learningRate;
             _momentumRate = momentumRate;
+            _clipValue = clipValue;
         }
 
         public void Initialize(double[][][] weights, double[][] biases)
@@ -47,7 +49,7 @@ namespace CPP.API.Persistence.Optimizers
 
         public void UpdateWeight(int layerIndex, int neuronIndex, int inputIndex, double gradient)
         {
-            gradient = GetClippedGradient(gradient);
+            gradient = ClipGradient(gradient);
 
             double weightUpdate = _momentumRate * _previousWeightsUpdates[layerIndex][neuronIndex][inputIndex] + _learningRate * gradient;
 
@@ -58,7 +60,7 @@ namespace CPP.API.Persistence.Optimizers
 
         public void UpdateBias(int layerIndex, int neuronIndex, double gradient)
         {
-            gradient = GetClippedGradient(gradient);
+            gradient = ClipGradient(gradient);
 
             double biasUpdate = _momentumRate * _previousBiasesUpdates[layerIndex][neuronIndex] + _learningRate * gradient;
 
@@ -67,11 +69,12 @@ namespace CPP.API.Persistence.Optimizers
             _previousBiasesUpdates[layerIndex][neuronIndex] = biasUpdate;
         }
 
-        // to avoid exploding gradient problem
-        private static double GetClippedGradient(double gradient, double threshold = 1.0)
+        // to avoid exploding gradient problem, if _clipValue is 0 - no gradient clipping
+        private double ClipGradient(double gradient)
         {
-            if (gradient > threshold) return threshold;
-            if (gradient < -threshold) return -threshold;
+            if (_clipValue == 0.0) return gradient;
+            if (gradient > _clipValue) return _clipValue;
+            if (gradient < -_clipValue) return -_clipValue;
             return gradient;
         }
     }

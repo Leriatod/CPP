@@ -92,13 +92,12 @@ namespace CPP.API.Persistence
 
         private double BackPropagateError(double[] inputs, double[] targets)
         {
-            double[] outputs = Run(inputs);
             double error = 0.0;
             for (int l = LastLayerIndex; l >= 0; l--)
             {
                 if (l == LastLayerIndex)
                 {
-                    error = PropagateErrorFromLastLayer(targets, outputs);
+                    error = PropagateErrorFromLastLayer(inputs, targets);
                     continue;
                 }
                 PropagateErrorFromHiddenLayer(l);
@@ -106,9 +105,10 @@ namespace CPP.API.Persistence
             return error;
         }
 
-        private double PropagateErrorFromLastLayer(double[] targets, double[] outputs)
+        private double PropagateErrorFromLastLayer(double[] inputs, double[] targets)
         {
             double error = 0.0;
+            double[] outputs = Run(inputs);
             for (int j = 0; j < GetLayerSize(LastLayerIndex); j++)
             {
                 double delta = outputs[j] - targets[j];

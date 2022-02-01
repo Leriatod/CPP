@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 namespace CPP.API.Core.Models

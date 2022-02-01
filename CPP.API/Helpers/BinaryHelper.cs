@@ -1,7 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace CPP.API.Heplers
+namespace CPP.API.Helpers
 {
     public static class BinaryHelper
     {
