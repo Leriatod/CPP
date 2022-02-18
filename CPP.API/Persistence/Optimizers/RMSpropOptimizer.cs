@@ -36,6 +36,8 @@ namespace CPP.API.Persistence.Optimizers
 
         public override void UpdateCoefficient(int layerIndex, int neuronIndex, int inputIndex, double gradient)
         {
+            gradient = ClipGradient(gradient);
+
             _coefficientsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex] =
                 _beta * _coefficientsSquaredGradientEMA[layerIndex][neuronIndex][inputIndex] + (1 - _beta) * Math.Pow(gradient, 2);
 

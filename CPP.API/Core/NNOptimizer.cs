@@ -1,5 +1,8 @@
+using System;
+
 namespace CPP.API.Core
 {
+    [Serializable]
     public abstract class NNOptimizer
     {
         protected readonly double _learningRate;
