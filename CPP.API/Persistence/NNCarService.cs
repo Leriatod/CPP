@@ -15,7 +15,7 @@ namespace CPP.API.Persistence
     public class NNCarService : INNCarService
     {
         private readonly string _nnReadFilePath = "Data/adam.bin";
-        private readonly string _nnWriteFilePath = "Data/adam2.bin";
+        private readonly string _nnWriteFilePath = "Data/266-128-64-32-1.bin";
         private readonly INN _nn;
         private readonly ICarReader _reader;
         private readonly IEnumerable<Car> _trainData;
@@ -69,7 +69,7 @@ namespace CPP.API.Persistence
                 {
                     double[] input = inputs[sampleCounter];
                     double[] target = targetPrices[sampleCounter];
-
+                    
                     double error = _nn.Train(input, target);
                     mse += error;
                     mae += Math.Sqrt(error);
@@ -81,7 +81,7 @@ namespace CPP.API.Persistence
 
             Console.WriteLine($"Training time: {stopwatch.Elapsed.TotalSeconds} seconds.");
 
-            PrintNNPerformanceForTestData();
+            PrintNNPerformance();
 
             BinaryHelper.WriteToBinaryFile(_nnWriteFilePath, _nn);
         }
@@ -89,14 +89,14 @@ namespace CPP.API.Persistence
         private void InitializeRandomNN(int inputSize)
         {
             _nn.Initialize(
-                new int[] { inputSize, 128, 64, 32, 1 },
+                new int[] { inputSize, 266, 128, 64, 1 },
                 new IActivationFunction[] { new ReLU(), new ReLU(), new ReLU(), new Linear() },
-                new AdamOptimizer());
+                new GradientDescentOptimizer(clipValue: 5.0));
 
             _nn.SetRandomCoefficients();
         }
 
-        private void PrintNNPerformanceForTestData()
+        private void PrintNNPerformance()
         {
             var testData = _reader.ReadTestData();
             var targetPrices = testData.Select(car => car.Price);
@@ -106,6 +106,16 @@ namespace CPP.API.Persistence
             Console.WriteLine($"Coefficient of determination (R2) = {targetPrices.GetRSquare(predictedPrices)}");
             Console.WriteLine($"Mean absolute error (MAE) = {targetPrices.GetMAE(predictedPrices)}");
             Console.WriteLine($"Mean squared error (MSE) = {targetPrices.GetMSE(predictedPrices)}");
+            Console.WriteLine($"Mean absolute percentage error (MAPE) = {100 * targetPrices.GetMAPE(predictedPrices):0.00}%");
+
+            targetPrices = _trainData.Select(car => car.Price);
+            predictedPrices = _trainData.Select(car => PredictPrice(car));
+
+            Console.WriteLine("Neural network performance on the train data:");
+            Console.WriteLine($"Coefficient of determination (R2) = {targetPrices.GetRSquare(predictedPrices)}");
+            Console.WriteLine($"Mean absolute error (MAE) = {targetPrices.GetMAE(predictedPrices)}");
+            Console.WriteLine($"Mean squared error (MSE) = {targetPrices.GetMSE(predictedPrices)}");
+            Console.WriteLine($"Mean absolute percentage error (MAPE) = {100 * targetPrices.GetMAPE(predictedPrices):0.00}%");
         }
     }
 }

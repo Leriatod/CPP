@@ -7,3 +7,7 @@ input::-webkit-inner-spin-button {
 #ngb-live {
   display: none;
 }
+
+label {
+  font-size: 18px;
+}

@@ -1,9 +1,9 @@
-<div class="row">
-  <div class="col-md-6">
-    <div *ngIf="!isLoading" class="card card-body bg-light">
-      <form #f="ngForm" (ngSubmit)="predictPrice()">
+<div *ngIf="!isLoading" class="card card-body bg-light">
+  <form #f="ngForm" (ngSubmit)="predictPrice()">
+    <div class="row">
+      <div class="col-md-4">
         <div class="form-group">
-          <label for="producer" class="form-label">Виробник</label>
+          <label for="producer" class="form-label mt-4">Виробник</label>
           <input
             #producer="ngModel"
             id="producer"
@@ -24,6 +24,8 @@
             Виробник є обов'язковим.
           </div>
         </div>
+      </div>
+      <div class="col-md-4">
         <div class="form-group">
           <label for="model" class="form-label mt-4">Модель</label>
           <input
@@ -46,6 +48,8 @@
             Модель є обов'язковою.
           </div>
         </div>
+      </div>
+      <div class="col-md-4">
         <div class="form-group">
           <label for="body" class="form-label mt-4">Тип кузова</label>
           <input
@@ -65,6 +69,10 @@
             Тип кузова є обов'язковим.
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
         <div class="form-group">
           <label for="drive" class="form-label mt-4">Тип приводу</label>
           <input
@@ -87,8 +95,12 @@
             Тип приводу є обов'язковим.
           </div>
         </div>
+      </div>
+      <div class="col-md-4">
         <div class="form-group">
-          <label for="transmission" class="form-label mt-4">Трансмісія</label>
+          <label for="transmission" class="form-label mt-4"
+            >Тип трансмісії</label
+          >
           <input
             #transmission="ngModel"
             id="transmission"
@@ -109,6 +121,8 @@
             Тип трансмісії є обов'язковим.
           </div>
         </div>
+      </div>
+      <div class="col-md-4">
         <div class="form-group">
           <label for="fuel" class="form-label mt-4">Тип палива</label>
           <input
@@ -128,7 +142,10 @@
             Тип палива є обов'язковим.
           </div>
         </div>
-
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
         <div class="form-group">
           <label for="engine" class="form-label mt-4">Об'єм двигуна</label>
           <input
@@ -154,7 +171,8 @@
             Об'єм двигуна не може бути від'ємним.
           </div>
         </div>
-
+      </div>
+      <div class="col-md-4">
         <div class="form-group">
           <label for="horsepower" class="form-label mt-4">Кінська сила</label>
           <input
@@ -180,7 +198,8 @@
             Кінська сила не може бути від'ємною.
           </div>
         </div>
-
+      </div>
+      <div class="col-md-4">
         <div class="form-group">
           <label for="distance" class="form-label mt-4">Пробіг</label>
           <input
@@ -202,7 +221,10 @@
           <div *ngIf="distance.errors.required">Пробіг є обов'язковим.</div>
           <div *ngIf="distance.errors.min">Пробіг не може бути від'ємним.</div>
         </div>
-
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
         <div class="form-group">
           <label for="year" class="form-label mt-4">Рік випуску</label>
           <input
@@ -221,20 +243,18 @@
           <div *ngIf="year.errors.required">Рік випуску є обов'язковим.</div>
           <div *ngIf="year.errors.min">Рік не може бути від'ємним.</div>
         </div>
-        <br />
-
-        <button [disabled]="f.invalid" type="submit" class="btn btn-primary">
-          Встановити ціну
-        </button>
-      </form>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="sticky-top">
-      <div class="text-center">
-        <h2>Рекомендована ціна</h2>
-        <h4 class="text-success">{{ price | currency }}</h4>
+      </div>
+      <div class="col-md-8">
+        <div>
+          <div style="padding-top: 50px" class="text-center">
+            <h2>Ціна: {{ price | currency }}</h2>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    <br />
+    <button [disabled]="f.invalid" type="submit" class="btn btn-primary">
+      Встановити ціну
+    </button>
+  </form>
 </div>

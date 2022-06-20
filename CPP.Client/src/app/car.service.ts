@@ -18,7 +18,6 @@ export class CarService {
   }
 
   predictPriceForCar(car: Car) {
-    console.log(car);
     return this.httpClient.post<number>(`${this.baseUrl}/predict`, car);
   }
 }
