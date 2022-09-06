@@ -69,7 +69,7 @@ namespace CPP.API.Persistence
                 {
                     double[] input = inputs[sampleCounter];
                     double[] target = targetPrices[sampleCounter];
-                    
+
                     double error = _nn.Train(input, target);
                     mse += error;
                     mae += Math.Sqrt(error);
@@ -89,9 +89,9 @@ namespace CPP.API.Persistence
         private void InitializeRandomNN(int inputSize)
         {
             _nn.Initialize(
-                new int[] { inputSize, 266, 128, 64, 1 },
+                new int[] { inputSize, 128, 64, 32, 1 },
                 new IActivationFunction[] { new ReLU(), new ReLU(), new ReLU(), new Linear() },
-                new GradientDescentOptimizer(clipValue: 5.0));
+                new AdamOptimizer());
 
             _nn.SetRandomCoefficients();
         }

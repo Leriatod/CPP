@@ -24,7 +24,7 @@ namespace CPP.API.Controllers
 
         [HttpPost]
         [Route("predict")]
-        public int PredictPriceForCar([FromBody] Car car)
+        public int PredictPrice([FromBody] Car car)
         {
             return (int)_carService.PredictPrice(car);
         }

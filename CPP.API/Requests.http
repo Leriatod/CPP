@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/cars
+# GET http://localhost:5000/api/cars
 ###
 GET http://localhost:5000/api/cars/feature-categories
 ###
@@ -7,16 +7,16 @@ content-type: application/json
 
 {
     "producer":"Volkswagen",
-    "model":"Golf IV",
-    "body":"Хетчбек",
+    "model":"Passat B7",
+    "body":"Седан",
     "drive":"Передній",
-    "transmission":"Ручна / Механіка",
+    "transmission":"Автомат",
     "fuel":"Бензин",
-    "engine":1.6,
-    "horsepower":105,
-    "distance":210,
-    "year":2002,
-    "price":5600
+    "engine":2,
+    "horsepower":176.8,
+    "distance":168,
+    "year":2018,
+    "price":14999
 }
 
 ###
@@ -72,3 +72,42 @@ content-type: application/json
     "year":2006,
     "price":6200
 }
+
+###
+POST http://localhost:5000/api/cars/predict
+content-type: application/json
+
+{
+    "producer":"BMW",
+    "model":"X5",
+    "body":"Позашляховик / Кросовер",
+    "drive":"Повний",
+    "transmission":"Автомат",
+    "fuel":"Дизель",
+    "engine":2,
+    "horsepower":314,
+    "distance":5,
+    "year":2016,
+    "price":55000
+}
+
+###
+POST http://localhost:5000/api/cars/predict
+content-type: application/json
+
+{
+    "producer":"Audi",
+    "model":"A8",
+    "body":"Седан",
+    "drive":"Повний",
+    "transmission":"Автомат",
+    "fuel":"Дизель",
+    "engine":3,
+    "horsepower":262.48,
+    "distance":77,
+    "year":2016,
+    "price":52000
+}
+
+###
+GET http://localhost:5000/api/cars/train/10
