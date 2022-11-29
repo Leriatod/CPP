@@ -1,4 +1,4 @@
-,Producer,Model,Body,Drive,Transmission,Engine,Horsepower,Fuel,Distance,Year,Price
+,manufacturer,model,body_type,drive_type,transmission_type,engine_capacity,horsepower,fuel_type,mileage,manufacture_year,price
 23952,Mazda,6,Унiверсал,Передній,Ручна / Механіка,2.2,184.96,Дизель,200.0,2012,8900
 35770,BMW,X5,Позашляховик / Кросовер,Повний,Автомат,4.4,400.0,Бензин,152.0,2011,15990
 4800,Skoda,Fabia,Хетчбек,Передній,Ручна / Механіка,1.4,75.0,Бензин,172.0,2005,4500

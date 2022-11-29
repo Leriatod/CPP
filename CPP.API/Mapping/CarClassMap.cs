@@ -7,17 +7,17 @@ namespace CPP.API.Mapping
     {
         public CarClassMap()
         {
-            Map(c => c.Producer).Name("Producer");
-            Map(c => c.Model).Name("Model");
-            Map(c => c.Body).Name("Body");
-            Map(c => c.Drive).Name("Drive");
-            Map(c => c.Transmission).Name("Transmission");
-            Map(c => c.Engine).Name("Engine");
-            Map(c => c.Horsepower).Name("Horsepower");
-            Map(c => c.Fuel).Name("Fuel");
-            Map(c => c.Distance).Name("Distance");
-            Map(c => c.Year).Name("Year");
-            Map(c => c.Price).Name("Price");
+            Map(c => c.Producer).Name("manufacturer");
+            Map(c => c.Model).Name("model");
+            Map(c => c.Body).Name("body_type");
+            Map(c => c.Drive).Name("drive_type");
+            Map(c => c.Transmission).Name("transmission_type");
+            Map(c => c.Engine).Name("engine_capacity");
+            Map(c => c.Horsepower).Name("horsepower");
+            Map(c => c.Fuel).Name("fuel_type");
+            Map(c => c.Distance).Name("mileage");
+            Map(c => c.Year).Name("manufacture_year");
+            Map(c => c.Price).Name("price");
         }
     }
 }

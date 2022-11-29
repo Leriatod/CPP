@@ -1,4 +1,4 @@
-,Producer,Model,Body,Drive,Transmission,Engine,Horsepower,Fuel,Distance,Year,Price
+,manufacturer,model,body_type,drive_type,transmission_type,engine_capacity,horsepower,fuel_type,mileage,manufacture_year,price
 9504,Volkswagen,Golf IV,Хетчбек,Передній,Ручна / Механіка,1.6,105.0,Бензин,210.0,2002,5600
 32511,Honda,CR-V,Позашляховик / Кросовер,Повний,Автомат,2.4,299.2,Газ / Бензин,162.0,2008,12999
 30519,Skoda,Octavia A7,Унiверсал,Передній,Ручна / Механіка,2.0,149.6,Дизель,220.0,2013,11800
