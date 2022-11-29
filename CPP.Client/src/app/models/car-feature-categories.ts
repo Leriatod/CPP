@@ -1,5 +1,5 @@
 export interface CarFeatureCategories {
-  producers: string[];
+  manufacturers: string[];
   models: string[];
   bodies: string[];
   drives: string[];

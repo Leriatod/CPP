@@ -1,12 +1,12 @@
 export interface Car {
-  producer: string;
+  manufacturer: string;
   model: string;
   body: string;
   drive: string;
   transmission: string;
   fuel: string;
-  engine: number;
+  engineCapacity: number;
   horsepower: number;
-  distance: number;
-  year: number;
+  mileage: number;
+  manufactureYear: number;
 }

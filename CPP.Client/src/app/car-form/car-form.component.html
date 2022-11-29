@@ -3,23 +3,23 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="producer" class="form-label mt-4">Виробник</label>
+          <label for="manufacturer" class="form-label mt-4">Виробник</label>
           <input
-            #producer="ngModel"
-            id="producer"
-            name="producer"
-            [(ngModel)]="car.producer"
-            [ngbTypeahead]="searchProducer$"
+            #manufacturer="ngModel"
+            id="manufacturer"
+            name="manufacturer"
+            [(ngModel)]="car.manufacturer"
+            [ngbTypeahead]="searchManufacturer$"
             [editable]="false"
             type="text"
             class="form-control"
             required
           />
           <hr />
-          <pre>Виробник: {{ car.producer }}</pre>
+          <pre>Виробник: {{ car.manufacturer }}</pre>
           <div
             class="alert alert-danger"
-            *ngIf="producer.touched && producer.invalid"
+            *ngIf="manufacturer.touched && manufacturer.invalid"
           >
             Виробник є обов'язковим.
           </div>
@@ -147,12 +147,14 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="engine" class="form-label mt-4">Об'єм двигуна</label>
+          <label for="engineCapacity" class="form-label mt-4"
+            >Об'єм двигуна</label
+          >
           <input
-            #engine="ngModel"
-            id="engine"
-            name="engine"
-            [(ngModel)]="car.engine"
+            #engineCapacity="ngModel"
+            id="engineCapacity"
+            name="engineCapacity"
+            [(ngModel)]="car.engineCapacity"
             type="number"
             class="form-control"
             placeholder="Введіть об'єм двигуна (в літрах) ..."
@@ -162,12 +164,12 @@
         </div>
         <div
           class="alert alert-danger"
-          *ngIf="engine.touched && engine.invalid"
+          *ngIf="engineCapacity.touched && engineCapacity.invalid"
         >
-          <div *ngIf="engine.errors.required">
+          <div *ngIf="engineCapacity.errors.required">
             Об'єм двигуна є обов'язковим.
           </div>
-          <div *ngIf="engine.errors.min">
+          <div *ngIf="engineCapacity.errors.min">
             Об'єм двигуна не може бути від'ємним.
           </div>
         </div>
@@ -201,12 +203,12 @@
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label for="distance" class="form-label mt-4">Пробіг</label>
+          <label for="mileage" class="form-label mt-4">Пробіг</label>
           <input
-            #distance="ngModel"
-            id="distance"
-            name="distance"
-            [(ngModel)]="car.distance"
+            #mileage="ngModel"
+            id="mileage"
+            name="mileage"
+            [(ngModel)]="car.mileage"
             type="number"
             class="form-control"
             placeholder="Введіть пробіг (в тис. км) ..."
@@ -216,22 +218,24 @@
         </div>
         <div
           class="alert alert-danger"
-          *ngIf="distance.touched && distance.invalid"
+          *ngIf="mileage.touched && mileage.invalid"
         >
-          <div *ngIf="distance.errors.required">Пробіг є обов'язковим.</div>
-          <div *ngIf="distance.errors.min">Пробіг не може бути від'ємним.</div>
+          <div *ngIf="mileage.errors.required">Пробіг є обов'язковим.</div>
+          <div *ngIf="mileage.errors.min">Пробіг не може бути від'ємним.</div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="year" class="form-label mt-4">Рік випуску</label>
+          <label for="manufactureYear" class="form-label mt-4"
+            >Рік випуску</label
+          >
           <input
-            #year="ngModel"
-            id="year"
-            name="year"
-            [(ngModel)]="car.year"
+            #manufactureYear="ngModel"
+            id="manufactureYear"
+            name="manufactureYear"
+            [(ngModel)]="car.manufactureYear"
             type="number"
             class="form-control"
             placeholder="Введіть потужність (в кінських силах) ..."
@@ -239,9 +243,16 @@
             required
           />
         </div>
-        <div class="alert alert-danger" *ngIf="year.touched && year.invalid">
-          <div *ngIf="year.errors.required">Рік випуску є обов'язковим.</div>
-          <div *ngIf="year.errors.min">Рік не може бути від'ємним.</div>
+        <div
+          class="alert alert-danger"
+          *ngIf="manufactureYear.touched && manufactureYear.invalid"
+        >
+          <div *ngIf="manufactureYear.errors.required">
+            Рік випуску є обов'язковим.
+          </div>
+          <div *ngIf="manufactureYear.errors.min">
+            Рік не може бути від'ємним.
+          </div>
         </div>
       </div>
       <div class="col-md-8">

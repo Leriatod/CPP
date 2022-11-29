@@ -6,16 +6,16 @@ POST http://localhost:5000/api/cars/predict
 content-type: application/json
 
 {
-    "producer":"Volkswagen",
+    "manufacturer":"Volkswagen",
     "model":"Passat B7",
     "body":"Седан",
     "drive":"Передній",
     "transmission":"Автомат",
     "fuel":"Бензин",
-    "engine":2,
+    "engineCapacity":2,
     "horsepower":176.8,
-    "distance":168,
-    "year":2018,
+    "mileage":168,
+    "manufactureYear":2018,
     "price":14999
 }
 
@@ -24,16 +24,16 @@ POST http://localhost:5000/api/cars/predict
 content-type: application/json
 
 {
-    "producer":"Honda",
+    "manufacturer":"Honda",
     "model":"CR-V",
     "body":"Позашляховик / Кросовер",
     "drive":"Повний",
     "transmission":"Автомат",
     "fuel":"Газ / Бензин",
-    "engine":2.4,
+    "engineCapacity":2.4,
     "horsepower":299.2,
-    "distance":162,
-    "year":2008,
+    "mileage":162,
+    "manufactureYear":2008,
     "price":12999
 }
 
@@ -42,16 +42,16 @@ POST http://localhost:5000/api/cars/predict
 content-type: application/json
 
 {
-    "producer":"Volkswagen",
+    "manufacturer":"Volkswagen",
     "model":"Golf VII",
     "body":"Унiверсал",
     "drive":"Передній",
     "transmission":"Ручна / Механіка",
     "fuel":"Дизель",
-    "engine":1.6,
+    "engineCapacity":1.6,
     "horsepower":110,
-    "distance":236,
-    "year":2014,
+    "mileage":236,
+    "manufactureYear":2014,
     "price":11800
 }
 
@@ -60,16 +60,16 @@ POST http://localhost:5000/api/cars/predict
 content-type: application/json
 
 {
-    "producer":"Mazda",
+    "manufacturer":"Mazda",
     "model":"6",
     "body":"Седан",
     "drive":"Передній",
     "transmission":"Ручна / Механіка",
     "fuel":"Газ / Бензин",
-    "engine":2,
+    "engineCapacity":2,
     "horsepower":147,
-    "distance":202,
-    "year":2006,
+    "mileage":202,
+    "manufactureYear":2006,
     "price":6200
 }
 
@@ -78,16 +78,16 @@ POST http://localhost:5000/api/cars/predict
 content-type: application/json
 
 {
-    "producer":"BMW",
+    "manufacturer":"BMW",
     "model":"X5",
     "body":"Позашляховик / Кросовер",
     "drive":"Повний",
     "transmission":"Автомат",
     "fuel":"Дизель",
-    "engine":2,
+    "engineCapacity":2,
     "horsepower":314,
-    "distance":5,
-    "year":2016,
+    "mileage":5,
+    "manufactureYear":2016,
     "price":55000
 }
 
@@ -96,16 +96,16 @@ POST http://localhost:5000/api/cars/predict
 content-type: application/json
 
 {
-    "producer":"Audi",
+    "manufacturer":"Audi",
     "model":"A8",
     "body":"Седан",
     "drive":"Повний",
     "transmission":"Автомат",
     "fuel":"Дизель",
-    "engine":3,
+    "engineCapacity":3,
     "horsepower":262.48,
-    "distance":77,
-    "year":2016,
+    "mileage":77,
+    "manufactureYear":2016,
     "price":52000
 }
 
