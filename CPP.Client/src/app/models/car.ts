@@ -1,5 +1,4 @@
 export interface Car {
-  manufacturer: string;
   model: string;
   body: string;
   drive: string;

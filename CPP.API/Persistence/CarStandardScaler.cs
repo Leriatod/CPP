@@ -32,7 +32,6 @@ namespace CPP.API.Persistence
         {
             return new Car()
             {
-                Manufacturer = car.Manufacturer,
                 Model = car.Model,
                 Body = car.Body,
                 Drive = car.Drive,

@@ -3,30 +3,6 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="manufacturer" class="form-label mt-4">Виробник</label>
-          <input
-            #manufacturer="ngModel"
-            id="manufacturer"
-            name="manufacturer"
-            [(ngModel)]="car.manufacturer"
-            [ngbTypeahead]="searchManufacturer$"
-            [editable]="false"
-            type="text"
-            class="form-control"
-            required
-          />
-          <hr />
-          <pre>Виробник: {{ car.manufacturer }}</pre>
-          <div
-            class="alert alert-danger"
-            *ngIf="manufacturer.touched && manufacturer.invalid"
-          >
-            Виробник є обов'язковим.
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
           <label for="model" class="form-label mt-4">Модель</label>
           <input
             #model="ngModel"
@@ -70,8 +46,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="drive" class="form-label mt-4">Тип приводу</label>
@@ -96,6 +70,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="transmission" class="form-label mt-4"
@@ -143,8 +119,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="engineCapacity" class="form-label mt-4"
@@ -174,6 +148,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="horsepower" class="form-label mt-4">Кінська сила</label>
@@ -224,8 +200,6 @@
           <div *ngIf="mileage.errors.min">Пробіг не може бути від'ємним.</div>
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="manufactureYear" class="form-label mt-4"
@@ -255,17 +229,18 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8">
-        <div>
-          <div style="padding-top: 50px" class="text-center">
-            <h2>Ціна: {{ price | currency }}</h2>
-          </div>
+    </div>
+    <div class="row" style="padding-top: 4vh">
+      <div class="col-md-6" style="padding-bottom: 3vh">
+        <button [disabled]="f.invalid" type="submit" class="btn btn-primary">
+          Встановити ціну
+        </button>
+      </div>
+      <div class="col-md-6">
+        <div class="text-center">
+          <h2>Ціна: {{ price | currency }}</h2>
         </div>
       </div>
     </div>
-    <br />
-    <button [disabled]="f.invalid" type="submit" class="btn btn-primary">
-      Встановити ціну
-    </button>
   </form>
 </div>

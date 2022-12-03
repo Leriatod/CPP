@@ -14,7 +14,6 @@ import { CarFeatureCategories } from "../models/car-feature-categories";
 export class CarFormComponent implements OnInit {
   isLoading = true;
 
-  searchManufacturer$: (text$: Observable<string>) => Observable<string[]>;
   searchModel$: (text$: Observable<string>) => Observable<string[]>;
   searchBody$: (text$: Observable<string>) => Observable<string[]>;
   searchDrive$: (text$: Observable<string>) => Observable<string[]>;
@@ -22,7 +21,6 @@ export class CarFormComponent implements OnInit {
   searchFuel$: (text$: Observable<string>) => Observable<string[]>;
 
   featureCategories: CarFeatureCategories = {
-    manufacturers: [],
     models: [],
     bodies: [],
     drives: [],
@@ -31,7 +29,6 @@ export class CarFormComponent implements OnInit {
   };
 
   car: Car = {
-    manufacturer: "",
     model: "",
     body: "",
     drive: "",
@@ -50,9 +47,7 @@ export class CarFormComponent implements OnInit {
   ngOnInit() {
     this.carService.getCarFeatureCategories().subscribe((featureCategories) => {
       this.featureCategories = featureCategories;
-      this.searchManufacturer$ = this.createSearchPipe(
-        featureCategories.manufacturers
-      );
+
       this.searchModel$ = this.createSearchPipe(featureCategories.models);
       this.searchBody$ = this.createSearchPipe(featureCategories.bodies);
       this.searchDrive$ = this.createSearchPipe(featureCategories.drives);

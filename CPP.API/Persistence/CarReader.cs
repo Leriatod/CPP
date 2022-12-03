@@ -30,7 +30,6 @@ namespace CPP.API.Persistence
             var data = ReadTrainData();
             return new CarFeatureCategories()
             {
-                Manufacturers = data.SelectOrderedUniqueStrings(d => d.Manufacturer),
                 Models = data.SelectOrderedUniqueStrings(d => d.Model),
                 Bodies = data.SelectOrderedUniqueStrings(d => d.Body),
                 Drives = data.SelectOrderedUniqueStrings(d => d.Drive),

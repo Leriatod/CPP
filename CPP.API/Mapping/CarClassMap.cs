@@ -7,8 +7,7 @@ namespace CPP.API.Mapping
     {
         public CarClassMap()
         {
-            Map(c => c.Manufacturer).Name("manufacturer");
-            Map(c => c.Model).Name("model");
+            Map(c => c.Model).Convert(args => $"{args.Row.GetField("manufacturer")} {args.Row.GetField("model")}");
             Map(c => c.Body).Name("body_type");
             Map(c => c.Drive).Name("drive_type");
             Map(c => c.Transmission).Name("transmission_type");

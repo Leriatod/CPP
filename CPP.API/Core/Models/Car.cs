@@ -2,7 +2,6 @@ namespace CPP.API.Core.Models
 {
     public class Car
     {
-        public string Manufacturer { get; set; }
         public string Model { get; set; }
         public string Body { get; set; }
         public string Drive { get; set; }

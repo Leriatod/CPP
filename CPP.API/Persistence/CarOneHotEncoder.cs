@@ -8,7 +8,6 @@ namespace CPP.API.Persistence
 {
     public class CarOneHotEncoder
     {
-        private readonly Dictionary<string, double[]> _vectorByManufacturer;
         private readonly Dictionary<string, double[]> _vectorByModel;
         private readonly Dictionary<string, double[]> _vectorByBody;
         private readonly Dictionary<string, double[]> _vectorByDrive;
@@ -17,7 +16,6 @@ namespace CPP.API.Persistence
 
         public CarOneHotEncoder(IEnumerable<Car> cars)
         {
-            _vectorByManufacturer = GetDictionaryEncoderForColumn(c => c.Manufacturer, cars);
             _vectorByModel = GetDictionaryEncoderForColumn(c => c.Model, cars);
             _vectorByBody = GetDictionaryEncoderForColumn(c => c.Body, cars);
             _vectorByDrive = GetDictionaryEncoderForColumn(c => c.Drive, cars);
@@ -55,8 +53,7 @@ namespace CPP.API.Persistence
 
         public double[] Encode(Car car)
         {
-            return GetVectorByColumnValue(_vectorByManufacturer, car.Manufacturer)
-                .Concat(GetVectorByColumnValue(_vectorByModel, car.Model))
+            return GetVectorByColumnValue(_vectorByModel, car.Model)
                 .Concat(GetVectorByColumnValue(_vectorByBody, car.Body))
                 .Concat(GetVectorByColumnValue(_vectorByDrive, car.Drive))
                 .Concat(GetVectorByColumnValue(_vectorByTransmission, car.Transmission))
