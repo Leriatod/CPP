@@ -3,9 +3,9 @@ using CsvHelper.Configuration;
 
 namespace CPP.API.Mapping
 {
-    public class CarClassMap : ClassMap<Car>
+    public class CarCsvMapper : ClassMap<Car>
     {
-        public CarClassMap()
+        public CarCsvMapper()
         {
             Map(c => c.Model).Convert(args => $"{args.Row.GetField("manufacturer")} {args.Row.GetField("model")}");
             Map(c => c.Body).Name("body_type");

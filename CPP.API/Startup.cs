@@ -1,11 +1,12 @@
-using CPP.API.Core;
-using CPP.API.Persistence;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CPP.API.Core;
+using CPP.API.Persistence;
 
 namespace CPP.API
 {
@@ -27,6 +28,7 @@ namespace CPP.API
             services.AddSingleton<INN, NN>();
             services.AddSingleton<INNCarService, NNCarService>();
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen();
 
             services.AddSpaStaticFiles(configuration =>

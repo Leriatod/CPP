@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using CPP.API.Core;
 using CPP.API.Core.Models;
+using CPP.API.Controllers.Dtos;
 
 namespace CPP.API.Controllers
 {
@@ -10,11 +12,13 @@ namespace CPP.API.Controllers
     {
         private readonly ICarReader _carReader;
         private readonly INNCarService _carService;
+        private readonly IMapper _mapper;
 
-        public CarsController(ICarReader carReader, INNCarService carService)
+        public CarsController(ICarReader carReader, INNCarService carService, IMapper mapper)
         {
-            _carService = carService;
             _carReader = carReader;
+            _carService = carService;
+            _mapper = mapper;
         }
 
         public IEnumerable<Car> GetAll()
@@ -24,8 +28,9 @@ namespace CPP.API.Controllers
 
         [HttpPost]
         [Route("predict")]
-        public int PredictPrice([FromBody] Car car)
+        public int PredictPrice([FromBody] CarDto carDto)
         {
+            var car = _mapper.Map<Car>(carDto);
             return (int)_carService.PredictPrice(car);
         }
 
@@ -35,5 +40,13 @@ namespace CPP.API.Controllers
         {
             return _carReader.ReadCarFeatureCategories();
         }
+
+        // UNCOMMENT TO TRAIN THE NEURAL NETWORK
+        // [HttpGet]
+        // [Route("train/{epochs}")]
+        // public void Train(int epochs)
+        // {
+        //     _carService.TrainNN(epochs);
+        // }
     }
 }

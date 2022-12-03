@@ -42,7 +42,7 @@ namespace CPP.API.Persistence
         {
             using var streamReader = new StreamReader(fileName);
             using var csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture);
-            csvReader.Context.RegisterClassMap<CarClassMap>();
+            csvReader.Context.RegisterClassMap<CarCsvMapper>();
             return csvReader.GetRecords<Car>().ToList();
         }
     }
