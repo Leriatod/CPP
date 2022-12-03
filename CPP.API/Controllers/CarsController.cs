@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using CPP.API.Core;
@@ -21,11 +20,6 @@ namespace CPP.API.Controllers
             _mapper = mapper;
         }
 
-        public IEnumerable<Car> GetAll()
-        {
-            return _carReader.ReadTestData();
-        }
-
         [HttpPost]
         [Route("predict")]
         public int PredictPrice([FromBody] CarDto carDto)
@@ -36,9 +30,10 @@ namespace CPP.API.Controllers
 
         [HttpGet]
         [Route("feature-categories")]
-        public CarFeatureCategories GetCarFeatureCategories()
+        public CarFeatureCategoriesDto GetCarFeatureCategories()
         {
-            return _carReader.ReadCarFeatureCategories();
+            var carFeatureCategories = _carReader.ReadCarFeatureCategories();
+            return _mapper.Map<CarFeatureCategoriesDto>(carFeatureCategories);
         }
 
         // UNCOMMENT TO TRAIN THE NEURAL NETWORK

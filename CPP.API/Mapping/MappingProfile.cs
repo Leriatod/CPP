@@ -9,6 +9,7 @@ namespace CPP.API.Mapping
         public MappingProfile()
         {
             CreateMap<CarDto, Car>();
+            CreateMap<CarFeatureCategories, CarFeatureCategoriesDto>();
         }
     }
 }
