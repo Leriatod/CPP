@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using CPP.API.Core;
 using CPP.API.Core.Models;
 using CPP.API.Extensions;
@@ -14,16 +15,19 @@ namespace CPP.API.Persistence
 {
     public class NNCarService : INNCarService
     {
-        private readonly string _nnReadFilePath = "Data/adam.bin";
-        private readonly string _nnWriteFilePath = "Data/266-128-64-32-1.bin";
+        private readonly string _nnReadFilePath = "Data/model.bin";
+        private readonly string _nnWriteFilePath = "Data/model2.bin";
         private readonly INN _nn;
         private readonly ICarReader _reader;
         private readonly IEnumerable<Car> _trainData;
         private readonly CarOneHotEncoder _oneHotEncoder;
         private readonly CarStandardScaler _standardScaler;
+        private readonly ILogger<NNCarService> _logger;
 
-        public NNCarService(INN nn, ICarReader reader)
+        public NNCarService(INN nn, ICarReader reader, ILogger<NNCarService> logger)
         {
+            _logger = logger;
+
             _reader = reader;
             _trainData = _reader.ReadTrainData();
             _oneHotEncoder = new CarOneHotEncoder(_trainData);
@@ -74,14 +78,14 @@ namespace CPP.API.Persistence
                     mse += error;
                     mae += Math.Sqrt(error);
                 }
-                Console.WriteLine($"Epoch: {epochCounter + 1}, MSE: {mse / inputs.Length}, MAE: {mae / inputs.Length}");
+                _logger.LogInformation($"Epoch: {epochCounter + 1}, MSE: {mse / inputs.Length}, MAE: {mae / inputs.Length}");
             }
 
             stopwatch.Stop();
 
-            Console.WriteLine($"Training time: {stopwatch.Elapsed.TotalSeconds} seconds.");
+            _logger.LogInformation($"Training time: {stopwatch.Elapsed.TotalSeconds} seconds.");
 
-            PrintNNPerformance();
+            LogNNPerformance();
 
             BinaryHelper.WriteToBinaryFile(_nnWriteFilePath, _nn);
         }
@@ -96,26 +100,28 @@ namespace CPP.API.Persistence
             _nn.SetRandomCoefficients();
         }
 
-        private void PrintNNPerformance()
+        private void LogNNPerformance()
         {
             var testData = _reader.ReadTestData();
             var targetPrices = testData.Select(car => car.Price);
             var predictedPrices = testData.Select(car => PredictPrice(car));
 
-            Console.WriteLine("Neural network performance on the test data:");
-            Console.WriteLine($"Coefficient of determination (R2) = {targetPrices.GetRSquare(predictedPrices)}");
-            Console.WriteLine($"Mean absolute error (MAE) = {targetPrices.GetMAE(predictedPrices)}");
-            Console.WriteLine($"Mean squared error (MSE) = {targetPrices.GetMSE(predictedPrices)}");
-            Console.WriteLine($"Mean absolute percentage error (MAPE) = {100 * targetPrices.GetMAPE(predictedPrices):0.00}%");
+            _logger.LogInformation("Neural network performance on the test data:");
+            LogRegressionMetrics(targetPrices, predictedPrices);
 
             targetPrices = _trainData.Select(car => car.Price);
             predictedPrices = _trainData.Select(car => PredictPrice(car));
 
-            Console.WriteLine("Neural network performance on the train data:");
-            Console.WriteLine($"Coefficient of determination (R2) = {targetPrices.GetRSquare(predictedPrices)}");
-            Console.WriteLine($"Mean absolute error (MAE) = {targetPrices.GetMAE(predictedPrices)}");
-            Console.WriteLine($"Mean squared error (MSE) = {targetPrices.GetMSE(predictedPrices)}");
-            Console.WriteLine($"Mean absolute percentage error (MAPE) = {100 * targetPrices.GetMAPE(predictedPrices):0.00}%");
+            _logger.LogInformation("Neural network performance on the train data:");
+            LogRegressionMetrics(targetPrices, predictedPrices);
+        }
+
+        private void LogRegressionMetrics(IEnumerable<double> targetPrices, IEnumerable<double> predictedPrices)
+        {
+            _logger.LogInformation($"Coefficient of determination (R2) = {targetPrices.GetRSquare(predictedPrices)}");
+            _logger.LogInformation($"Mean absolute error (MAE) = {targetPrices.GetMAE(predictedPrices)}");
+            _logger.LogInformation($"Mean squared error (MSE) = {targetPrices.GetMSE(predictedPrices)}");
+            _logger.LogInformation($"Mean absolute percentage error (MAPE) = {100 * targetPrices.GetMAPE(predictedPrices):0.00}%");
         }
     }
 }
