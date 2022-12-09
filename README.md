@@ -1,4 +1,4 @@
-Web app for estimating the value of used cars according to their attributes (Producer, Model, etc.). Neural network is used as a machine learning model for price evaluation. Cars data for neural network training has been collected from secondary web resources for selling autos in Ukraine.
+Web app for estimating the value of used cars according to their attributes (Model, horsepower, manufacture year, etc.). Neural network is used as a machine learning model for price evaluation. Cars data for neural network training has been collected from secondary web resources for selling autos in Ukraine.
 
 Technologies used:
 

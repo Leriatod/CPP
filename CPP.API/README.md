@@ -1,4 +1,4 @@
-Web API project built with AspNetCore framework to provide endpoints for managing car data and price estimation of used cars according to their attributes.
+Web API project built with .Net 5.0 framework to provide endpoints for retreiving cars data and price estimation of used cars according to their attributes.
 
 To run this project:
 
