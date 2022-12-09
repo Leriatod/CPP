@@ -9,6 +9,7 @@ namespace CPP.API.Persistence
     {
         private IActivationFunction[] _activationFunctions;
         private NNOptimizer _optimizer;
+        private double _l2Lambda;
         private double[][][] _coefficients;
         private double[][] _layerOutputs;
         private double[][] _layerInputs;
@@ -17,10 +18,11 @@ namespace CPP.API.Persistence
         private int LayerNumber => _coefficients.Length;
         private int LastLayerIndex => LayerNumber - 1;
 
-        public void Initialize(int[] layerSizes, IActivationFunction[] activationFunctions, NNOptimizer optimizer)
+        public void Initialize(int[] layerSizes, IActivationFunction[] activationFunctions, NNOptimizer optimizer, double l2Lambda = 0.001)
         {
             _optimizer = optimizer;
             _activationFunctions = activationFunctions;
+            _l2Lambda = l2Lambda;
 
             _coefficients = new double[layerSizes.Length - 1][][];
             _deltas = new double[LayerNumber][];
@@ -134,7 +136,8 @@ namespace CPP.API.Persistence
                 {
                     for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                     {
-                        _optimizer.UpdateCoefficient(l, j, i, gradient: _deltas[l][j] * GetInputForLayer(l, i));
+                        _optimizer.UpdateCoefficient(l, j, i,
+                            gradient: _deltas[l][j] * GetInputForLayer(l, i) + _l2Lambda * _coefficients[l][j][i]);
                     }
                 }
             }
