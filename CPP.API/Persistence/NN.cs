@@ -70,8 +70,7 @@ namespace CPP.API.Persistence
                     _layerInputs[l][j] = 0.0;
                     for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                     {
-                        double input = GetInputForLayer(l, i);
-                        _layerInputs[l][j] += _coefficients[l][j][i] * input;
+                        _layerInputs[l][j] += _coefficients[l][j][i] * GetInput(l, i);
                     }
                     _layerOutputs[l][j] = _activationFunctions[l].Evaluate(_layerInputs[l][j]);
                 }
@@ -137,13 +136,13 @@ namespace CPP.API.Persistence
                     for (int i = 0; i < GetInputsNumberForLayer(l); i++)
                     {
                         _optimizer.UpdateCoefficient(l, j, i,
-                            gradient: _deltas[l][j] * GetInputForLayer(l, i) + _l2Lambda * _coefficients[l][j][i]);
+                            gradient: _deltas[l][j] * GetInput(l, i) + _l2Lambda * _coefficients[l][j][i]);
                     }
                 }
             }
         }
 
-        private double GetInputForLayer(int layerIndex, int inputIndex)
+        private double GetInput(int layerIndex, int inputIndex)
         {
             if (inputIndex == 0) return 1;
             if (layerIndex == 0) return _inputs[inputIndex - 1];

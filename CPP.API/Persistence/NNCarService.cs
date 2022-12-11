@@ -95,7 +95,8 @@ namespace CPP.API.Persistence
             _nn.Initialize(
                 new int[] { inputSize, 128, 64, 32, 1 },
                 new IActivationFunction[] { new ReLU(), new ReLU(), new ReLU(), new Linear() },
-                new AdamOptimizer());
+                new AdamOptimizer(),
+                l2Lambda: 0.01);
 
             _nn.SetRandomCoefficients();
         }

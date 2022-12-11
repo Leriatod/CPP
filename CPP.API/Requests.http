@@ -5,17 +5,17 @@ GET http://localhost:5000/api/cars/feature-categories
 POST http://localhost:5000/api/cars/predict
 content-type: application/json
 
-{
-    "model":"Volkswagen Passat B7",
-    "body":"Седан",
+{ 
+    "model":"Renault Kangoo пасс.",
+    "body":"Мінівен",
     "drive":"Передній",
-    "transmission":"Автомат",
-    "fuel":"Бензин",
-    "engineCapacity":2,
-    "horsepower":176.8,
-    "mileage":168,
-    "manufactureYear":2018
-    // real price: 14999
+    "transmission":"Ручна / Механіка",
+    "fuel":"Дизель",
+    "engineCapacity":1.5,
+    "horsepower":89.76,
+    "mileage":70.0,
+    "manufactureYear":2019
+    // real price: 14500
 }
 
 ###
@@ -31,7 +31,7 @@ content-type: application/json
     "engineCapacity":2.4,
     "horsepower":299.2,
     "mileage":162,
-    "manufactureYear":2008,
+    "manufactureYear":2008
     // real price: 12999
 }
 
@@ -104,4 +104,4 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:5000/api/cars/train/10
+GET http://localhost:5000/api/cars/train/20
