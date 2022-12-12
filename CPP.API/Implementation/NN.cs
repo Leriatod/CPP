@@ -2,7 +2,7 @@ using System;
 using CPP.API.Core;
 using CPP.API.Extensions;
 
-namespace CPP.API.Persistence
+namespace CPP.API.Implementation
 {
     [Serializable]
     public class NN : INN
