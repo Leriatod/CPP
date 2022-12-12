@@ -1,7 +1,7 @@
 using System;
 using CPP.API.Core;
 
-namespace CPP.API.Persistence.Optimizers
+namespace CPP.API.Implementation.Optimizers
 {
     [Serializable]
     public class RMSpropOptimizer : NNOptimizer

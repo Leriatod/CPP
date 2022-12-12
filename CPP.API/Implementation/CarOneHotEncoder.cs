@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using CPP.API.Core.Models;
 using CPP.API.Extensions;
 
-namespace CPP.API.Persistence
+namespace CPP.API.Implementation
 {
     public class CarOneHotEncoder
     {

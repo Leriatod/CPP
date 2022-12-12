@@ -8,7 +8,7 @@ using CPP.API.Core.Models;
 using CPP.API.Core;
 using CPP.API.Extensions;
 
-namespace CPP.API.Persistence
+namespace CPP.API.Implementation
 {
     public class CarReader : ICarReader
     {

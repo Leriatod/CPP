@@ -1,7 +1,7 @@
 using System;
 using CPP.API.Core;
 
-namespace CPP.API.Persistence.ActivationFunctions
+namespace CPP.API.Implementation.ActivationFunctions
 {
     [Serializable]
     public class Linear : IActivationFunction

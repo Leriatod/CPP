@@ -8,10 +8,10 @@ using CPP.API.Core;
 using CPP.API.Core.Models;
 using CPP.API.Extensions;
 using CPP.API.Helpers;
-using CPP.API.Persistence.ActivationFunctions;
-using CPP.API.Persistence.Optimizers;
+using CPP.API.Implementation.ActivationFunctions;
+using CPP.API.Implementation.Optimizers;
 
-namespace CPP.API.Persistence
+namespace CPP.API.Implementation
 {
     public class NNCarService : INNCarService
     {
