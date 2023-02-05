@@ -10,10 +10,10 @@ namespace CPP.API.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ICarReader _carReader;
-        private readonly INNCarService _carService;
+        private readonly ICarService _carService;
         private readonly IMapper _mapper;
 
-        public CarsController(ICarReader carReader, INNCarService carService, IMapper mapper)
+        public CarsController(ICarReader carReader, ICarService carService, IMapper mapper)
         {
             _carReader = carReader;
             _carService = carService;
@@ -25,7 +25,7 @@ namespace CPP.API.Controllers
         public int PredictPrice([FromBody] CarDto carDto)
         {
             var car = _mapper.Map<Car>(carDto);
-            return (int)_carService.PredictPrice(car);
+            return _carService.PredictPrice(car);
         }
 
         [HttpGet]
@@ -37,11 +37,11 @@ namespace CPP.API.Controllers
         }
 
         // UNCOMMENT TO TRAIN THE NEURAL NETWORK
-        [HttpGet]
-        [Route("train/{epochs}")]
-        public void Train(int epochs)
-        {
-            _carService.TrainNN(epochs);
-        }
+        // [HttpGet]
+        // [Route("train/{epochs}")]
+        // public void Train(int epochs)
+        // {
+        //     _carService.TrainNN(epochs);
+        // }
     }
 }

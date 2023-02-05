@@ -26,8 +26,7 @@ namespace CPP.API
             services.AddControllersWithViews();
 
             services.AddSingleton<ICarReader, CarReader>();
-            services.AddSingleton<INN, NN>();
-            services.AddSingleton<INNCarService, NNCarService>();
+            services.AddSingleton<ICarService, CarService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen();
