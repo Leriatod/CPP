@@ -7,18 +7,18 @@ namespace CPP.API.NeuralNetwork
     [Serializable]
     public class NN : INN
     {
-        private IActivationFunction[] _activationFunctions;
-        private NNOptimizer _optimizer;
-        private double _l2Lambda;
-        private double[][][] _coefficients;
-        private double[][] _layerOutputs;
-        private double[][] _layerInputs;
-        private double[][] _deltas;
+        private readonly IActivationFunction[] _activationFunctions;
+        private readonly NNOptimizer _optimizer;
+        private readonly double _l2Lambda;
+        private readonly double[][][] _coefficients;
+        private readonly double[][] _layerOutputs;
+        private readonly double[][] _layerInputs;
+        private readonly double[][] _deltas;
         private double[] _inputs;
         private int LayerNumber => _coefficients.Length;
         private int LastLayerIndex => LayerNumber - 1;
 
-        public void Initialize(int[] layerSizes, IActivationFunction[] activationFunctions, NNOptimizer optimizer, double l2Lambda = 0.001)
+        public NN(int[] layerSizes, IActivationFunction[] activationFunctions, NNOptimizer optimizer, double l2Lambda = 0.001)
         {
             _optimizer = optimizer;
             _activationFunctions = activationFunctions;
@@ -43,9 +43,11 @@ namespace CPP.API.NeuralNetwork
             }
 
             _optimizer.Initialize(_coefficients);
+
+            SetRandomCoefficients();
         }
 
-        public void SetRandomCoefficients()
+        private void SetRandomCoefficients()
         {
             var random = new Random();
             for (int l = 0; l < LayerNumber; l++)

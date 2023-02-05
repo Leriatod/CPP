@@ -35,13 +35,5 @@ namespace CPP.API.Controllers
             var carFeatureCategories = _carReader.ReadCarFeatureCategories();
             return _mapper.Map<CarFeatureCategoriesDto>(carFeatureCategories);
         }
-
-        // UNCOMMENT TO TRAIN THE NEURAL NETWORK
-        // [HttpGet]
-        // [Route("train/{epochs}")]
-        // public void Train(int epochs)
-        // {
-        //     _carService.TrainNN(epochs);
-        // }
     }
 }

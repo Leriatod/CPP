@@ -104,4 +104,4 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:5000/api/cars/train/20
+GET http://localhost:5000/api/nn/train/1
