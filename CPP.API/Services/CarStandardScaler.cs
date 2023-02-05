@@ -3,7 +3,7 @@ using CPP.API.Core.Models;
 using System.Linq;
 using CPP.API.Extensions;
 
-namespace CPP.API.Implementation
+namespace CPP.API.Services
 {
     public class CarStandardScaler
     {

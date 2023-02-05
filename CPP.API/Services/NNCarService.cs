@@ -11,7 +11,7 @@ using CPP.API.Helpers;
 using CPP.API.Implementation.ActivationFunctions;
 using CPP.API.Implementation.Optimizers;
 
-namespace CPP.API.Implementation
+namespace CPP.API.Services
 {
     public class NNCarService : INNCarService
     {
