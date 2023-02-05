@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CPP.API.Core;
+using CPP.API.Persistence;
 using CPP.API.Implementation;
 
 namespace CPP.API
