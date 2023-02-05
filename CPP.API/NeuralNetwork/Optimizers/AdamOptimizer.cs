@@ -1,7 +1,7 @@
 using System;
 using CPP.API.Core;
 
-namespace CPP.API.Implementation.Optimizers
+namespace CPP.API.NeuralNetwork.Optimizers
 {
     [Serializable]
     public class AdamOptimizer : NNOptimizer

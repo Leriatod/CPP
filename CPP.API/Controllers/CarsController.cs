@@ -37,11 +37,11 @@ namespace CPP.API.Controllers
         }
 
         // UNCOMMENT TO TRAIN THE NEURAL NETWORK
-        // [HttpGet]
-        // [Route("train/{epochs}")]
-        // public void Train(int epochs)
-        // {
-        //     _carService.TrainNN(epochs);
-        // }
+        [HttpGet]
+        [Route("train/{epochs}")]
+        public void Train(int epochs)
+        {
+            _carService.TrainNN(epochs);
+        }
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using CPP.API.Core;
 
-namespace CPP.API.Implementation.ActivationFunctions
+namespace CPP.API.NeuralNetwork.ActivationFunctions
 {
     [Serializable]
     public class ReLU : IActivationFunction

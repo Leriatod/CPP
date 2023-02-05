@@ -2,7 +2,7 @@ using System;
 using CPP.API.Core;
 using CPP.API.Extensions;
 
-namespace CPP.API.Implementation
+namespace CPP.API.NeuralNetwork
 {
     [Serializable]
     public class NN : INN

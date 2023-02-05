@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using CPP.API.Core.Models;
 using System.Linq;
+using CPP.API.Core.Models;
 using CPP.API.Extensions;
 
 namespace CPP.API.Services

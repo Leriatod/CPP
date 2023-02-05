@@ -8,8 +8,8 @@ using CPP.API.Core;
 using CPP.API.Core.Models;
 using CPP.API.Extensions;
 using CPP.API.Helpers;
-using CPP.API.Implementation.ActivationFunctions;
-using CPP.API.Implementation.Optimizers;
+using CPP.API.NeuralNetwork.ActivationFunctions;
+using CPP.API.NeuralNetwork.Optimizers;
 
 namespace CPP.API.Services
 {
