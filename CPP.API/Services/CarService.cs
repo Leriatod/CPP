@@ -1,7 +1,6 @@
 using CPP.API.Core;
 using CPP.API.Core.Models;
 using CPP.API.Extensions;
-using CPP.API.Helpers;
 
 namespace CPP.API.Services
 {
@@ -12,14 +11,14 @@ namespace CPP.API.Services
         private readonly CarOneHotEncoder _oneHotEncoder;
         private readonly CarStandardScaler _standardScaler;
 
-        public CarService(ICarReader reader)
+        public CarService(ICarReader reader, INNSerializer nnSerializer)
         {
             var trainData = reader.ReadTrainData();
 
             _oneHotEncoder = new CarOneHotEncoder(trainData);
             _standardScaler = new CarStandardScaler(trainData);
 
-            _nn = BinaryHelper.ReadFromBinaryFile<INN>(_nnReadFilePath);
+            _nn = nnSerializer.Deserialize(_nnReadFilePath);
         }
 
         public int PredictPrice(Car car)

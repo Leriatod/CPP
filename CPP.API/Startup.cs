@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using CPP.API.Core;
 using CPP.API.Persistence;
 using CPP.API.Services;
-using CPP.API.NeuralNetwork;
 
 namespace CPP.API
 {
@@ -25,8 +24,9 @@ namespace CPP.API
         {
             services.AddControllersWithViews();
 
-            services.AddSingleton<ICarReader, CarReader>();
             services.AddSingleton<ICarService, CarService>();
+            services.AddSingleton<ICarReader, CarReader>();
+            services.AddSingleton<INNSerializer, NNSerializer>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen();
