@@ -14,11 +14,11 @@ namespace CPP.API.Controllers
         }
 
         // UNCOMMENT TO RETRAIN THE NEURAL NETWORK
-        [HttpGet]
-        [Route("train/{epochs}")]
-        public void Train(int epochs)
-        {
-            _nnTrainer.Train(epochs, "Data/model.bin", "Data/model2.bin");
-        }
+        // [HttpGet]
+        // [Route("train/{epochs}")]
+        // public void Train(int epochs)
+        // {
+        //     _nnTrainer.Train(epochs, "Data/model.bin", "Data/model2.bin");
+        // }
     }
 }

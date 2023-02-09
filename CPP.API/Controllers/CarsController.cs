@@ -22,10 +22,16 @@ namespace CPP.API.Controllers
 
         [HttpPost]
         [Route("predict")]
-        public int PredictPrice([FromBody] CarDto carDto)
+        public IActionResult PredictPrice([FromBody] CarDto carDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var car = _mapper.Map<Car>(carDto);
-            return _carService.PredictPrice(car);
+
+            return Ok(_carService.PredictPrice(car));
         }
 
         [HttpGet]
